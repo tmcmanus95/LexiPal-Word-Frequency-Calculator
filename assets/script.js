@@ -22,3 +22,22 @@ based on word frequecy tier.
 of use is displayed in the appropriate container. 
 10. Add stylings to make the user interface not terrible. 
 */
+var inputField = document.querySelector("#input-field")
+
+var submitButton = document.querySelector("#submit-button")
+function getInputtedText() {
+     var wordInputted = inputField.value
+    requesturl = `https://api.datamuse.com/words?sp=${wordInputted}&md=f`
+    fetch(requesturl)
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        console.log("data", data )
+        var wordFrequencyValue = data[0].tags
+        console.log(`wordFrequencyValue The frequency of ${wordInputted} is ${wordFrequencyValue}`)
+    })
+}
+
+
+submitButton.addEventListener("click", getInputtedText)
