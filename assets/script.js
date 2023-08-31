@@ -22,6 +22,7 @@ based on word frequecy tier.
 of use is displayed in the appropriate container. 
 10. Add stylings to make the user interface not terrible. 
 */
+
 var inputField = document.querySelector("#input-field")
 
 var submitButton = document.querySelector("#submit-button")
