@@ -12,7 +12,15 @@
 2. Create function for grabbing the data we want from the word frequency api 
 3. Create function for grabbing the data we want from the quote generator api 
 4. Set the parameters for diffrent word frequency tiers (1000+ very common, 999-500 common, etc.)
-    - Create classes for each tier of word frequency. 
+    - Create classes for each tier of word frequency.
+    -Tiers
+        - Extremely Common (1000+)
+        - Very Common (400+)
+        - Common (80+)
+        - (Uncommon 5+)
+        - (Very Uncommon 1+)
+        - (Rare .5 - 1)
+        - (Extremely Rare < .5)
 5. Create a function for determining the frequency of each word inputted, create a span for each word, and assign the class for each word 
 based on word frequecy tier. 
 6. Save searched words to local storage. 
@@ -24,8 +32,9 @@ of use is displayed in the appropriate container.
 */
 
 var inputField = document.querySelector("#input-field")
-
+var quoteButton = document.querySelector("#quote-button")
 var submitButton = document.querySelector("#submit-button")
+
 function getInputtedText() {
      var wordInputted = inputField.value
     requesturl = `https://api.datamuse.com/words?sp=${wordInputted}&md=f`
@@ -40,5 +49,25 @@ function getInputtedText() {
     })
 }
 
+function getRandomNum (max) {
+    return Math.floor(Math.random() * max);
+}
 
+function getQuote() {
+    inputField.value = ""
+    var slip_id = getRandomNum(220)
+    quoteUrl = `https://api.adviceslip.com/advice/${slip_id}`
+    fetch(quoteUrl)
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        console.log("data", data )
+        var quote = data.slip.advice
+        inputField.value = quote
+    })
+}
+
+
+quoteButton.addEventListener("click", getQuote)
 submitButton.addEventListener("click", getInputtedText)
