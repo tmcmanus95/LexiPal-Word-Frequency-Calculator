@@ -39,77 +39,86 @@ var wordFrequencyDisplay = document.querySelector("#word-frequency-display");
 var pastSearchesContainer = document.querySelector("#past-searches");
 
 async function getFrequency(wordInputted) {
-  requesturl = `https://api.datamuse.com/words?sp=${wordInputted}&md=f`;
-  const response = await fetch(requesturl);
-  const data = await response.json();
-  var frequencyRate = data[0].tags[0].split(":")[1];
-  return frequencyRate;
+    requesturl = `https://api.datamuse.com/words?sp=${wordInputted}&md=f`;
+    const response = await fetch(requesturl);
+    const data = await response.json();
+    var frequencyRate = data[0].tags[0].split(":")[1];
+    return frequencyRate;
 }
 
 function getRandomNum(max) {
-  return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max);
 }
 
 function getQuote() {
-  inputField.value = "";
-  var slip_id = getRandomNum(220);
-  quoteUrl = `https://api.adviceslip.com/advice/${slip_id}`;
-  fetch(quoteUrl)
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log("data", data);
-      var quote = data.slip.advice;
-      inputField.value = quote;
-    });
+    inputField.value = "";
+    var slip_id = getRandomNum(220);
+    quoteUrl = `https://api.adviceslip.com/advice/${slip_id}`;
+    fetch(quoteUrl)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log("data", data);
+            var quote = data.slip.advice;
+            inputField.value = quote;
+        });
 }
 
 function assignFrequencyClass(wordSpan, frequencyRate) {
-  if (frequencyRate > 1000) {
-    wordSpan.classList.add("extremely-common");
-  } else if (frequencyRate >= 400 && frequencyRate < 1000) {
-    wordSpan.classList.add("very-common");
-  } else if (frequencyRate >= 80 && frequencyRate < 400) {
-    wordSpan.classList.add("common");
-  } else if (frequencyRate >= 5 && frequencyRate < 80) {
-    wordSpan.classList.add("uncommon");
-  } else if (frequencyRate >= 1 && frequencyRate < 5) {
-    wordSpan.classList.add("very-uncommon");
-  } else if (frequencyRate > 0.5 && frequencyRate < 1) {
-    wordSpan.classList.add("rare");
-  } else {
-    wordSpan.classList.add("extremely-rare");
-  }
+    if (frequencyRate > 1000) {
+        wordSpan.classList.add("extremely-common");
+    } else if (frequencyRate >= 400 && frequencyRate < 1000) {
+        wordSpan.classList.add("very-common");
+    } else if (frequencyRate >= 80 && frequencyRate < 400) {
+        wordSpan.classList.add("common");
+    } else if (frequencyRate >= 5 && frequencyRate < 80) {
+        wordSpan.classList.add("uncommon");
+    } else if (frequencyRate >= 1 && frequencyRate < 5) {
+        wordSpan.classList.add("very-uncommon");
+    } else if (frequencyRate > 0.5 && frequencyRate < 1) {
+        wordSpan.classList.add("rare");
+    } else {
+        wordSpan.classList.add("extremely-rare");
+    }
 }
 
 async function setFrequency() {
-  resultsContainer.textContent = "";
-  textInput = inputField.value;
-  saveToLocalStorage(textInput, savedSearches)
-  var arrayOfUserInput = textInput.match(/[a-zA-Z]+('[a-zA-Z]+')*/g);
-  var punctuationWordsArray = textInput.match(/\S+/g);
-  if (arrayOfUserInput.length <= 140) {
-    for (let i = 0; i < arrayOfUserInput.length; i++) {
-      var wordInputted = arrayOfUserInput[i];
-      var frequencyRate = await getFrequency(wordInputted);
-      var punctuationWord = punctuationWordsArray[i];
-      console.log(
-        `The word, ${arrayOfUserInput[i]} appears ${frequencyRate} times per million words. The exact word the user inputted was "${punctuationWord}".`
-      );
-      var wordSpan = document.createElement("span");
-      wordSpan.textContent = punctuationWord + " ";
-      assignFrequencyClass(wordSpan, frequencyRate);
-      resultsContainer.appendChild(wordSpan);
+    resultsContainer.textContent = "";
+    textInput = inputField.value;
+    saveToLocalStorage(textInput, savedSearches)
+    var arrayOfUserInput = textInput.match(/[a-zA-Z]+('[a-zA-Z]+')*/g);
+    var punctuationWordsArray = textInput.match(/\S+/g);
+    if (arrayOfUserInput.length <= 140) {
+        for (let i = 0; i < arrayOfUserInput.length; i++) {
+            var wordInputted = arrayOfUserInput[i];
+            var frequencyRate = await getFrequency(wordInputted);
+            var punctuationWord = punctuationWordsArray[i];
+            console.log(
+                `The word, ${arrayOfUserInput[i]} appears ${frequencyRate} times per million words. The exact word the user inputted was "${punctuationWord}".`
+            );
+            var wordSpan = document.createElement("span");
+            wordSpan.textContent = punctuationWord + " ";
+            assignFrequencyClass(wordSpan, frequencyRate);
+            resultsContainer.appendChild(wordSpan);
+            // currently doesn't work as intended
+            console.log("about to add event listener to" + wordSpan.textContent)
+            wordSpan.addEventListener("click", () => getSelectedWordFrequency(punctuationWord, frequencyRate))
+            console.log(punctuationWord)
+        }
     }
-  }
 }
 var savedSearches = []
-function saveToLocalStorage(textInput, savedSearches){
-    
+function saveToLocalStorage(textInput, savedSearches) {
+
     savedSearches.push(textInput)
     localStorage.setItem("Past Searches", JSON.stringify(savedSearches))
 }
 
 quoteButton.addEventListener("click", getQuote);
 submitButton.addEventListener("click", setFrequency);
+
+function getSelectedWordFrequency(punctuationWord, frequencyRate) {
+    wordFrequencyDisplay.textContent = ""
+    wordFrequencyDisplay.textContent = `The word, ${punctuationWord} appears ${frequencyRate} times per million words.`
+}
