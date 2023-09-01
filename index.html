@@ -4,12 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Word Frequency</title>
+    <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-    <h1>Check Word Frequency</h1>
-    <input id="input-field" placeholder="Paste text or generate quote" />
-    <button id="submit-button">Get Frequency</button>
-    <button id="quote-button">Get Quote</button>
+    <div id="input-container">
+      <h1>Check Word Frequency</h1>
+      <textarea
+        id="input-field"
+        placeholder="Paste text or generate quote"
+        rows="4"
+        columns="50"
+      ></textarea>
+      <button id="submit-button">Get Frequency</button>
+      <button id="quote-button">Get Quote</button>
+      <div id="key-container">
+        <p id="keys" class="hide">
+          <span id="extremely-common">Extremely Common</span>
+          <span id="very-common">Very Common</span>
+          <span id="common">Common</span>
+          <span id="uncommon">Uncommon</span>
+          <span id="very-uncommon">Very Uncommon</span>
+          <span id="rare">Rare</span>
+          <span id="extremely-rare">Extremely Rare</span>
+        </p>
+      </div>
+      <div id="output-container">
+        <p id="word-frequency-display"></p>
+        <p id="results-container"></p>
+        <p id="past-searches"></p>
+      </div>
+    </div>
     <script src="./assets/script.js"></script>
   </body>
 </html>
