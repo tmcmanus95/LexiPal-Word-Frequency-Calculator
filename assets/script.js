@@ -83,12 +83,11 @@ function assignFrequencyClass(wordSpan, frequencyRate) {
   }
 }
 
-async function setFrequency() {
+async function setFrequency(expandedText) {
+  //Removed saveToLocalStorage function and added it to the expandContractionWords function
   resultsContainer.textContent = "";
-  textInput = inputField.value;
-  saveToLocalStorage(textInput, savedSearches);
-  var arrayOfUserInput = textInput.match(/[a-zA-Z]+('[a-zA-Z]+')*/g);
-  var punctuationWordsArray = textInput.match(/\S+/g);
+  var arrayOfUserInput = expandedText.match(/[a-zA-Z]+('[a-zA-Z]+')*/g);
+  var punctuationWordsArray = expandedText.match(/\S+/g);
   if (arrayOfUserInput.length <= 140) {
     for (let i = 0; i < arrayOfUserInput.length; i++) {
       const wordInputted = arrayOfUserInput[i];
@@ -112,10 +111,43 @@ function saveToLocalStorage(textInput, savedSearches) {
   localStorage.setItem("Past Searches", JSON.stringify(savedSearches));
 }
 
-quoteButton.addEventListener("click", getQuote);
-submitButton.addEventListener("click", setFrequency);
+function expandContractionWords(textInput) {
+  //Dictionary of contractions
+  const contractionWords = {
+    "don't": "do not",
+    "won't": "will not",
+    "can't": "cannot",
+    "i'm": "I am",
+  };
+
+  //Creates an array containing all inputted word, split at the space using regex
+  const contractedWords = textInput.split(/\s+/);
+
+  //Initiates an empty array for the new expanded words to be added to.
+  const expandedWords = [];
+
+  //Loops through the contractedWords array, looks for matches in the dictionary. Then adds the expanded versions to the expandedWords array.
+  for (i = 0; i < contractedWords.length; i++) {
+    word = contractedWords[i].toLowerCase();
+    const expandedWord = contractionWords[word.toLowerCase()] || word;
+    expandedWords.push(expandedWord);
+  }
+
+  const expandedText = expandedWords.join(" ");
+  console.log(expandedText);
+
+  //Returns the expanded text, which is then fed back into the setFrequency function instead of the inital user input.
+  return expandedText;
+}
 
 function getSelectedWordFrequency(punctuationWord, frequencyRate) {
   wordFrequencyDisplay.textContent = "";
   wordFrequencyDisplay.textContent = `The word, ${punctuationWord} appears ${frequencyRate} times per million words.`;
 }
+quoteButton.addEventListener("click", getQuote);
+
+//The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
+submitButton.addEventListener("click", async function () {
+  const expandedText = expandContractionWords(inputField.value);
+  await setFrequency(expandedText);
+});
