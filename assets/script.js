@@ -24,8 +24,9 @@ of use is displayed in the appropriate container.
 */
 
 var inputField = document.querySelector("#input-field")
-
+var quoteButton = document.querySelector("#quote-button")
 var submitButton = document.querySelector("#submit-button")
+
 function getInputtedText() {
      var wordInputted = inputField.value
     requesturl = `https://api.datamuse.com/words?sp=${wordInputted}&md=f`
@@ -40,5 +41,24 @@ function getInputtedText() {
     })
 }
 
+function getRandomNum (max) {
+    return Math.floor(Math.random() * max);
+}
 
+function getQuote() {
+    var slip_id = getRandomNum(220)
+    quoteUrl = `https://api.adviceslip.com/advice/${slip_id}`
+    fetch(quoteUrl)
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        console.log("data", data )
+        var quote = data.slip.advice
+        inputField.value = quote
+    })
+}
+
+
+quoteButton.addEventListener("click", getQuote)
 submitButton.addEventListener("click", getInputtedText)
