@@ -1,3 +1,37 @@
+:root {
+  --extremely-common-color: violet;
+  --very-common-color: blue;
+  --common-color: green;
+  --uncommon-color: yellow;
+  --very-uncommon-color: orange;
+  --rare-color: red;
+  --very-rare-color: darkred;
+}
+
 .hide {
-    display: none;
+  display: none;
+}
+
+.extremely-common {
+  background-color: var(--extremely-common-color);
+}
+
+.very-common {
+  background-color: var(--very-common-color);
+}
+
+.common {
+  background-color: var(--common-color);
+}
+.uncommon {
+  background-color: var(--uncommon-color);
+}
+.very-uncommon {
+  background-color: var(--very-uncommon-color);
+}
+.rare {
+  background-color: var(--rare-color);
+}
+.extremely-rare {
+  background-color: var(--very-rare-color);
 }
