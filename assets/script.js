@@ -86,7 +86,7 @@ function assignFrequencyClass(wordSpan, frequencyRate) {
 async function setFrequency() {
   resultsContainer.textContent = "";
   textInput = inputField.value;
-  //Call save storage function when made.
+  saveToLocalStorage(textInput, savedSearches)
   var arrayOfUserInput = textInput.match(/[a-zA-Z]+('[a-zA-Z]+')*/g);
   var punctuationWordsArray = textInput.match(/\S+/g);
   if (arrayOfUserInput.length <= 140) {
@@ -103,6 +103,12 @@ async function setFrequency() {
       resultsContainer.appendChild(wordSpan);
     }
   }
+}
+var savedSearches = []
+function saveToLocalStorage(textInput, savedSearches){
+    
+    savedSearches.push(textInput)
+    localStorage.setItem("Past Searches", JSON.stringify(savedSearches))
 }
 
 quoteButton.addEventListener("click", getQuote);
