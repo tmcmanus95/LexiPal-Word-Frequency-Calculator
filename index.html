@@ -7,8 +7,35 @@
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
+    <header>
+      <img src="./assets/icons/languageicon.png" id="language-icon" />
+      <div id="languages-container">
+        <input
+          type="radio"
+          id="english-tab"
+          class="language-tab"
+          name="language-tab"
+          checked
+        />
+        <label for="english" class="language-tab">English</label>
+        <input
+          type="radio"
+          id="korean-tab"
+          class="language-tab"
+          name="language-tab"
+        />
+        <label for="korean" class="language-tab">한국어</label>
+        <input
+          type="radio"
+          id="polish-tab"
+          class="language-tab"
+          name="language-tab"
+        />
+        <label for="polish" class="language-tab">Polski</label>
+      </div>
+    </header>
     <div id="input-container">
-      <h1>Check Word Frequency</h1>
+      <h1 id="title-text">Check Word Frequency</h1>
       <textarea
         id="input-field"
         placeholder="Paste text or generate quote"
@@ -31,7 +58,9 @@
       <div id="output-container">
         <p id="word-frequency-display"></p>
         <p id="results-container"></p>
+        <p id="past-searches-line">Past Searches</p>
         <p id="past-searches"></p>
+        <button id="clear-past-searches-button">Clear</button>
       </div>
     </div>
     <script src="./assets/script.js"></script>

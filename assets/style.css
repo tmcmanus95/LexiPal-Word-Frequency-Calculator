@@ -8,6 +8,28 @@
   --very-rare-color: darkred;
 }
 
+#past-searches-line {
+  font-size: 30px;
+  display: none;
+}
+
+#clear-past-searches-button {
+  display: none;
+}
+
+.past-search-row {
+  font-size: 15px;
+}
+
+#language-icon {
+  width: 30px;
+  height: 30px;
+}
+
+#languages-container {
+  display: none;
+}
+
 .hide {
   display: none;
 }
