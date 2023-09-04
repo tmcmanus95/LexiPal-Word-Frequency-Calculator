@@ -91,25 +91,39 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function setFrequency(expandedText) {
-    //Removed saveToLocalStorage function and added it to the expandContractionWords function
     resultsContainer.textContent = "";
     pastSearchesLine.style.display = "inline";
     clearButton.style.display = "inline";
-    var arrayOfUserInput = expandedText.match(/[a-zA-Z]+('[a-zA-Z]+')*/g);
+    var arrayOfUserInput = expandedText.match(
+      /[a-zA-Z]+('[a-zA-Z]+)*|('[a-zA-Z]+)+/g
+    );
     var punctuationWordsArray = expandedText.match(/\S+/g);
     if (arrayOfUserInput.length <= 140) {
       for (let i = 0; i < arrayOfUserInput.length; i++) {
         const wordInputted = arrayOfUserInput[i];
         const punctuationWord = punctuationWordsArray[i];
-        //Added check to verify that the word to be added is not undefined.
-        if (typeof punctuationWord !== "undefined") {
+        //Checks if the expanded version of the word ends in "'s". If it does not, the function runs as usual.
+        if (!wordInputted.endsWith("'s")) {
           const frequencyRate = await getFrequency(wordInputted);
           const wordSpan = document.createElement("span");
+
           wordSpan.textContent = punctuationWord + " ";
           assignFrequencyClass(wordSpan, frequencyRate);
           resultsContainer.appendChild(wordSpan);
           wordSpan.addEventListener("click", () =>
             getSelectedWordFrequency(punctuationWord, frequencyRate)
+          );
+        } else {
+          //If the word does end in "'s":
+          const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
+          //The function then runs as normal again, but with the form of the word without the "'s."
+          const wordSpan = document.createElement("span");
+          const frequencyRate = await getFrequency(wordBeforeApostrophe);
+          assignFrequencyClass(wordSpan, frequencyRate);
+          wordSpan.textContent = wordInputted + " ";
+          resultsContainer.appendChild(wordSpan);
+          wordSpan.addEventListener("click", () =>
+            getSelectedWordFrequency(wordBeforeApostrophe, frequencyRate)
           );
         }
       }
@@ -129,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "don't": "do not",
       "won't": "will not",
       "can't": "cannot",
-      "i'm": "I am",
+      "I'm": "I am",
       "it's": "it is",
       "they're": "they are",
       "he's": "he is",
