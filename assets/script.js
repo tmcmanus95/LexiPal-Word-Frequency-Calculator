@@ -100,15 +100,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (arrayOfUserInput.length <= 140) {
       for (let i = 0; i < arrayOfUserInput.length; i++) {
         const wordInputted = arrayOfUserInput[i];
-        const frequencyRate = await getFrequency(wordInputted);
         const punctuationWord = punctuationWordsArray[i];
-        const wordSpan = document.createElement("span");
-        wordSpan.textContent = punctuationWord + " ";
-        assignFrequencyClass(wordSpan, frequencyRate);
-        resultsContainer.appendChild(wordSpan);
-        wordSpan.addEventListener("click", () =>
-          getSelectedWordFrequency(punctuationWord, frequencyRate)
-        );
+        //Added check to verify that the word to be added is not undefined.
+        if (typeof punctuationWord !== "undefined") {
+          const frequencyRate = await getFrequency(wordInputted);
+          const wordSpan = document.createElement("span");
+          wordSpan.textContent = punctuationWord + " ";
+          assignFrequencyClass(wordSpan, frequencyRate);
+          resultsContainer.appendChild(wordSpan);
+          wordSpan.addEventListener("click", () =>
+            getSelectedWordFrequency(punctuationWord, frequencyRate)
+          );
+        }
       }
     }
   }
@@ -153,17 +156,17 @@ document.addEventListener("DOMContentLoaded", function () {
     return expandedText;
   }
 
-  function getSelectedWordFrequency(punctuationWord, frequencyRate) {
+  function getSelectedWordFrequency(wordInputted, frequencyRate) {
     var selectedLanguage = document.querySelector(
       'input[name="language-tab"]:checked'
     ).id;
     wordFrequencyDisplay.textContent = "";
     if (selectedLanguage === "korean-tab") {
-      wordFrequencyDisplay.textContent = `평균적으로, ${punctuationWord}이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
+      wordFrequencyDisplay.textContent = `평균적으로, "${wordInputted}"이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
     } else if (selectedLanguage === "polish-tab") {
-      wordFrequencyDisplay.textContent = `Średnio te słowo ${punctuationWord}, pokazuje się ${frequencyRate} razy na milion po Angielsku`;
+      wordFrequencyDisplay.textContent = `Średnio te słowo, "${wordInputted}" pokazuje się ${frequencyRate} razy na milion po Angielsku`;
     } else {
-      wordFrequencyDisplay.textContent = `On average, the word, ${punctuationWord} appears ${frequencyRate} times per million words in English.`;
+      wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
     }
   }
 
