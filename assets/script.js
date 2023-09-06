@@ -1,35 +1,3 @@
-/* 
-1. Create elements and variables for those html elements in the javascript    
-    - Title
-    - Input field 
-    - Get frequency button 
-    - Get quote button 
-    - Results container
-    - Word information container
-    - Past searches container 
-    - Language dropdown container (if time)
-
-2. Create function for grabbing the data we want from the word frequency api 
-3. Create function for grabbing the data we want from the quote generator api 
-4. Set the parameters for diffrent word frequency tiers (1000+ very common, 999-500 common, etc.)
-    - Create classes for each tier of word frequency.
-    -Tiers
-        - Extremely Common (1000+)
-        - Very Common (400+)
-        - Common (80+)
-        - (Uncommon 5+)
-        - (Very Uncommon 1+)
-        - (Rare .5 - 1)
-        - (Extremely Rare < .5)
-5. Create a function for determining the frequency of each word inputted, create a span for each word, and assign the class for each word 
-based on word frequecy tier. 
-6. Save searched words to local storage. 
-7. Create a function for searching local storage for past searched words, and rendering those to the page if they exist. 
-8. Create a function for changing the language based on what language is selected in the language drop down menu. 
-9. Create a function so that when each word in the results container is clicked, information about that word and its exact frequency
-of use is displayed in the appropriate container. 
-10. Add stylings to make the user interface not terrible. 
-*/
 document.addEventListener("DOMContentLoaded", function () {
   var languageIcon = document.querySelector("#language-icon");
   var languageToggles = document.querySelectorAll(
@@ -37,6 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   );
   var languageContainer = document.querySelector("#languages-container");
   var titleTextLine = document.querySelector("#title-text");
+  var appDescriptionLine = document.querySelector("#app-description-line");
+  var errorMessageLine = document.querySelector("#error-message-line");
   var inputField = document.querySelector("#input-field");
   var quoteButton = document.querySelector("#quote-button");
   var submitButton = document.querySelector("#submit-button");
@@ -50,8 +20,19 @@ document.addEventListener("DOMContentLoaded", function () {
     requesturl = `https://api.datamuse.com/words?sp=${wordInputted}&md=f`;
     const response = await fetch(requesturl);
     const data = await response.json();
-    var frequencyRate = data[0].tags[0].split(":")[1];
-    return frequencyRate;
+    try {
+      if (data[0].tags.length === 0) {
+        return 0;
+      }
+      if (data[0].tags && data[0].tags.length > 0) {
+        var frequencyRate = data[0].tags[0].split(":")[1];
+        return frequencyRate;
+      } else {
+        return 0;
+      }
+    } catch (error) {
+      console.log("Error occured, ");
+    }
   }
 
   function getRandomNum(max) {
@@ -85,8 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
       wordSpan.classList.add("very-uncommon");
     } else if (frequencyRate > 0.5 && frequencyRate < 1) {
       wordSpan.classList.add("rare");
-    } else {
+    } else if (frequencyRate > 0.001 && frequencyRate < 0.5) {
       wordSpan.classList.add("extremely-rare");
+    } else {
+      wordSpan.classList.add("error");
     }
   }
 
@@ -94,33 +77,101 @@ document.addEventListener("DOMContentLoaded", function () {
     resultsContainer.textContent = "";
     pastSearchesLine.style.display = "inline";
     clearButton.style.display = "inline";
-    var arrayOfUserInput = expandedText.match(
-      /[a-zA-Z]+('[a-zA-Z]+)*|('[a-zA-Z]+)+/g
+    console.log("Expanded Text, ", expandedText);
+    var arrayOfUserInput = expandedText.split(/ *- *| +|—+/);
+    console.log("array: ", arrayOfUserInput);
+    var noHyphensArray = arrayOfUserInput.map(function (word) {
+      return word.replace(/-/g);
+    });
+    console.log("this is the no hyphens array, ", noHyphensArray);
+    var noHyphensOrUndefinedArray = noHyphensArray.filter(function (word) {
+      return word !== "undefined";
+    });
+    console.log(
+      "This is the no hyphens or undefined array, I hope, ",
+      noHyphensOrUndefinedArray
     );
-    var punctuationWordsArray = expandedText.match(/\S+/g);
-    if (arrayOfUserInput.length <= 140) {
-      for (let i = 0; i < arrayOfUserInput.length; i++) {
-        const wordInputted = arrayOfUserInput[i];
-        const punctuationWord = punctuationWordsArray[i];
-        //Checks if the expanded version of the word ends in "'s". If it does not, the function runs as usual.
-        if (!wordInputted.endsWith("'s")) {
+    var noHyphensOrUndefinedString = noHyphensArray.join(" ");
+    var noNumbersString = noHyphensOrUndefinedString.replace(
+      /[^a-zA-Z\s;,.?'!-]+/g,
+      ""
+    );
+    var noNumbersArray = noNumbersString.split(" ");
+    console.log("This is the no numbers array, ", noNumbersArray);
+    console.log("This is the new string with no numbers, ", noNumbersString);
+    // var noNumbersArray = noNumbersString.join(" ");
+    console.log("This is the new array with no numbers, ", noNumbersArray);
+    var apiSearchableArray = noHyphensOrUndefinedString.match(
+      /[a-zA-Z]+('[a-zA-Z]+)*|('[a-zA-Z]+)+|-|\d+/g
+    );
+    console.log("This is what the api will search, ", apiSearchableArray);
+
+    console.log(
+      "The apiSearchableArray is this long, ",
+      apiSearchableArray.length
+    );
+    console.log(
+      "The noHypensOrUndefinedArray is this long, ",
+      noHyphensOrUndefinedArray.length
+    );
+    for (let i = 0; i < apiSearchableArray.length; i++) {
+      if (apiSearchableArray.length === noHyphensOrUndefinedArray.length) {
+        const wordInputted = apiSearchableArray[i];
+        const punctuationWord = noHyphensOrUndefinedArray[i];
+        console.log("I am about to search: ", wordInputted);
+
+        // Check if the word contains only letters and apostrophes (no numbers)
+        if (!wordInputted.endsWith("'s") && wordInputted !== undefined) {
           const frequencyRate = await getFrequency(wordInputted);
           const wordSpan = document.createElement("span");
-
+          console.log("the punctuation word is, ", punctuationWord);
           wordSpan.textContent = punctuationWord + " ";
+          wordSpan.id = "word";
           assignFrequencyClass(wordSpan, frequencyRate);
           resultsContainer.appendChild(wordSpan);
           wordSpan.addEventListener("click", () =>
-            getSelectedWordFrequency(punctuationWord, frequencyRate)
+            getSelectedWordFrequency(wordInputted, frequencyRate)
           );
-        } else {
-          //If the word does end in "'s":
+        } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
+          console.log("this word ends with 's: ", wordInputted);
           const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
           //The function then runs as normal again, but with the form of the word without the "'s."
           const wordSpan = document.createElement("span");
           const frequencyRate = await getFrequency(wordBeforeApostrophe);
           assignFrequencyClass(wordSpan, frequencyRate);
           wordSpan.textContent = wordInputted + " ";
+          wordSpan.id = "word";
+          resultsContainer.appendChild(wordSpan);
+          wordSpan.addEventListener("click", () =>
+            getSelectedWordFrequency(wordBeforeApostrophe, frequencyRate)
+          );
+        }
+      } else {
+        const wordInputted = apiSearchableArray[i];
+        const punctuationWord = noHyphensOrUndefinedArray[i];
+        console.log("I am about to search: ", wordInputted);
+
+        // Check if the word contains only letters and apostrophes (no numbers)
+        if (!wordInputted.endsWith("'s") && wordInputted !== undefined) {
+          const frequencyRate = await getFrequency(wordInputted);
+          const wordSpan = document.createElement("span");
+          console.log("the punctuation word is, ", punctuationWord);
+          wordSpan.textContent = wordInputted + " ";
+          wordSpan.id = "word";
+          assignFrequencyClass(wordSpan, frequencyRate);
+          resultsContainer.appendChild(wordSpan);
+          wordSpan.addEventListener("click", () =>
+            getSelectedWordFrequency(wordInputted, frequencyRate)
+          );
+        } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
+          console.log("this word ends with 's: ", wordInputted);
+          const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
+          //The function then runs as normal again, but with the form of the word without the "'s."
+          const wordSpan = document.createElement("span");
+          const frequencyRate = await getFrequency(wordBeforeApostrophe);
+          assignFrequencyClass(wordSpan, frequencyRate);
+          wordSpan.textContent = wordInputted + " ";
+          wordSpan.id = "word";
           resultsContainer.appendChild(wordSpan);
           wordSpan.addEventListener("click", () =>
             getSelectedWordFrequency(wordBeforeApostrophe, frequencyRate)
@@ -137,60 +188,98 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function expandContractionWords(textInput) {
-    saveToLocalStorage(textInput, savedSearches);
-    //Dictionary of contractions
-    const contractionWords = {
-      "don't": "do not",
-      "won't": "will not",
-      "can't": "cannot",
-      "I'm": "I am",
-      "it's": "it is",
-      "they're": "they are",
-      "he's": "he is",
-      "you're": "you are",
-      //We will add a bunch more contractions here.
-    };
+    var inputArray = textInput.split(" ");
+    if (inputArray.length <= 14000) {
+      saveToLocalStorage(textInput, savedSearches);
+      //Dictionary of contractions
+      const contractionWords = {
+        "don't": "do not",
+        "Don't": "Do not",
+        "won't": "will not",
+        "can't": "cannot",
+        "I'm": "I am",
+        "it's": "it is",
+        "It's": "It is",
+        "they're": "they are",
+        "he's": "he is",
+        "you're": "you are",
+        "doesn't": "does not",
+        "Doesn't": "Does not",
+        //We will add a bunch more contractions here.
+      };
 
-    //Creates an array containing all inputted word, split at the space using regex
-    const contractedWords = textInput.split(/\s+/);
+      //Creates an array containing all inputted word, split at the space using regex
+      const trimmedText = textInput.trim();
+      const contractedWords = trimmedText.split(/\s+/);
 
-    //Initiates an empty array for the new expanded words to be added to.
-    const expandedWords = [];
+      //Initiates an empty array for the new expanded words to be added to.
+      const expandedWords = [];
 
-    //Loops through the contractedWords array, looks for matches in the dictionary. Then adds the expanded versions to the expandedWords array.
-    for (i = 0; i < contractedWords.length; i++) {
-      word = contractedWords[i];
-      const expandedWord = contractionWords[word] || word;
-      expandedWords.push(expandedWord);
+      //Loops through the contractedWords array, looks for matches in the dictionary. Then adds the expanded versions to the expandedWords array.
+      for (i = 0; i < contractedWords.length; i++) {
+        word = contractedWords[i];
+        const expandedWord = contractionWords[word] || word;
+        expandedWords.push(expandedWord);
+      }
+
+      const expandedText = expandedWords.join(" ");
+
+      //Returns the expanded text, which is then fed back into the setFrequency function instead of the inital user input.
+      console.log(expandedText);
+      return expandedText;
+    } else {
+      submitFewerMessage = document.createElement("h3");
+      submitFewerMessage.textContent =
+        "Please submit fewer than 50 words at a time.";
+      errorMessageLine.appendChild(submitFewerMessage);
+      setTimeout(() => {
+        errorMessageLine.removeChild(submitFewerMessage);
+      }, 2000);
+      return;
     }
-
-    const expandedText = expandedWords.join(" ");
-
-    //Returns the expanded text, which is then fed back into the setFrequency function instead of the inital user input.
-    return expandedText;
   }
 
   function getSelectedWordFrequency(wordInputted, frequencyRate) {
-    var selectedLanguage = document.querySelector(
-      'input[name="language-tab"]:checked'
-    ).id;
-    wordFrequencyDisplay.textContent = "";
-    if (selectedLanguage === "korean-tab") {
-      wordFrequencyDisplay.textContent = `평균적으로, "${wordInputted}"이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
-    } else if (selectedLanguage === "polish-tab") {
-      wordFrequencyDisplay.textContent = `Średnio te słowo, "${wordInputted}" pokazuje się ${frequencyRate} razy na milion po Angielsku`;
+    if (frequencyRate !== undefined) {
+      wordFrequencyDisplay.removeAttribute("class");
+      assignFrequencyClass(wordFrequencyDisplay, frequencyRate);
+      var selectedLanguage = document.querySelector(
+        'input[name="language-tab"]:checked'
+      ).id;
+      wordFrequencyDisplay.textContent = "";
+      if (selectedLanguage === "korean-tab") {
+        wordFrequencyDisplay.textContent = `평균적으로, "${wordInputted}"이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
+      } else if (selectedLanguage === "polish-tab") {
+        wordFrequencyDisplay.textContent = `Średnio te słowo, "${wordInputted}" pokazuje się ${frequencyRate} razy na milion po Angielsku`;
+      } else {
+        wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
+      }
     } else {
-      wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
+      var selectedLanguage = document.querySelector(
+        'input[name="language-tab"]:checked'
+      ).id;
+      wordFrequencyDisplay.textContent = "";
+      wordFrequencyDisplay.classList.add("error");
+      if (selectedLanguage === "korean-tab") {
+        wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
+      } else if (selectedLanguage === "polish-tab") {
+        wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
+      } else {
+        wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
+      }
     }
   }
 
   function changeLanguage(event) {
     if (event.target.checked) {
+      wordFrequencyDisplay.removeAttribute("class");
+      languageIcon.style.display = "inline";
       const selectedLanguage = event.target.id;
       wordFrequencyDisplay.textContent = "";
       switch (selectedLanguage) {
         case "english-tab":
-          titleTextLine.textContent = "Check Word Frequency";
+          appDescriptionLine.textContent =
+            "Check the frequency of English words per million instances";
           submitButton.textContent = "Get Frequency";
           quoteButton.textContent = "Get quote";
           inputField.placeholder = "Paste text or generate random quote?";
@@ -200,7 +289,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           break;
         case "korean-tab":
-          titleTextLine.textContent = "영어 단어 빈도를 계산기";
+          appDescriptionLine.textContent = "영어 단어 빈도를 계산기";
           submitButton.textContent = "빈도를 찾기";
           quoteButton.textContent = "인용문을 생성하기";
           inputField.placeholder = "텍스트를 입력하거나 인용문를 생성하세요";
@@ -210,7 +299,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
           break;
         case "polish-tab":
-          titleTextLine.textContent = "Sprawdź Częstotliwość Słów Angielskich";
+          appDescriptionLine.textContent =
+            "Sprawdź Częstotliwość Słów Angielskich";
           submitButton.textContent = "Znajdź Częstotliwość Słów";
           quoteButton.textContent = "Generuj Losową Cytatę";
           inputField.placeholder =
@@ -233,6 +323,10 @@ document.addEventListener("DOMContentLoaded", function () {
       var pastSearchLine = document.createElement("p");
       pastSearchLine.className = "past-search-row";
       pastSearchLine.textContent = pastSearch;
+      pastSearchLine.addEventListener("click", function () {
+        inputField.textContent = "";
+        inputField.textContent = pastSearch;
+      });
       pastSearchesContainer.appendChild(pastSearchLine);
     });
     if (pastSearches.length > 0) {
@@ -247,14 +341,32 @@ document.addEventListener("DOMContentLoaded", function () {
     pastSearchesContainer.textContent = "";
     window.localStorage.removeItem("Past Searches");
     savedSearches = [];
+    clearButton.style.display = "none";
+    pastSearchesLine.style.display = "none";
   }
 
   function showLanguages() {
+    languageIcon.style.display = "";
     if (languageContainer.style.display === "inline") {
       languageContainer.style.display = "none";
     } else {
       languageContainer.style.display = "inline";
     }
+  }
+
+  function getPoem() {
+    requestURl = "https://poetrydb.org/linecount,random/5;1";
+    fetch(requestURl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log("DATA:", data);
+        poemArray = data[0].lines;
+        poet = data[0].author;
+        poemString = poemArray.join(" ");
+        inputField.value = poemString + "\n" + poet;
+      });
   }
 
   quoteButton.addEventListener("click", getQuote);
