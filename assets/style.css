@@ -1,11 +1,99 @@
 :root {
-  --extremely-common-color: violet;
-  --very-common-color: blue;
-  --common-color: green;
-  --uncommon-color: yellow;
-  --very-uncommon-color: orange;
-  --rare-color: red;
-  --very-rare-color: darkred;
+  --extremely-common-color: lavender;
+  --very-common-color: lightcyan;
+  --common-color: lightgreen;
+  --uncommon-color: lightyellow;
+  --very-uncommon-color: lightsalmon;
+  --rare-color: pink;
+  --very-rare-color: indianred;
+}
+
+#submit-button,
+#quote-button {
+  width: 28rem;
+}
+
+#past-searches-line {
+  font-size: 30px;
+  display: none;
+  cursor: pointer;
+}
+
+#background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48%;
+  background-image: url("./icons/rainbow11.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+#rest-of-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -2;
+  background-color: bisque;
+}
+
+#footer-info {
+  position: fixed;
+  bottom: 0;
+}
+
+#stuff-on-top-of-the-background-image {
+  position: relative;
+  z-index: 1;
+}
+
+#app-description-line {
+  margin-top: 10px;
+}
+
+#title-text {
+  background-color: white;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 75px;
+}
+
+#input-field {
+  background-color: white;
+  font-size: 30px;
+}
+
+#clear-past-searches-button {
+  display: none;
+  width: 100px;
+  font-size: 15px;
+}
+
+.past-search-row {
+  font-size: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#language-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#languages-container {
+  display: none;
+}
+
+#word-frequency-display {
+  font-size: 30px;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px grey;
 }
 
 .hide {
@@ -34,4 +122,27 @@
 }
 .extremely-rare {
   background-color: var(--very-rare-color);
+}
+.error {
+  background-color: white;
+}
+
+#word {
+  display: inline-block;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 15px;
+  font-size: 30px;
+  box-shadow: 5px 5px 5px grey;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

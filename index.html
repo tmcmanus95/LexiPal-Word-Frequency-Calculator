@@ -1,22 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Word Frequency</title>
     <link rel="stylesheet" href="./assets/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   </head>
-  <body>
+  <body class="container">
+    <header>
+      <div id="background-image"></div>
+      <div id="rest-of-background"></div>
+      <div id="stuff-on-top-of-the-background-image">
+      <img src="./assets/icons/languageicon.png" id="language-icon" />
+      <div id="languages-container">
+        <input
+          type="radio"
+          id="english-tab"
+          class="language-tab"
+          name="language-tab"
+          checked
+        />
+        <label for="english" class="language-tab">English</label>
+        <input
+          type="radio"
+          id="korean-tab"
+          class="language-tab"
+          name="language-tab"
+        />
+        <label for="korean" class="language-tab">한국어</label>
+        <input
+          type="radio"
+          id="polish-tab"
+          class="language-tab"
+          name="language-tab"
+        />
+        <label for="polish" class="language-tab">Polski</label>
+      </div>
+    </header>
     <div id="input-container">
-      <h1>Check Word Frequency</h1>
+      <hgroup>
+        <h1 id="title-text">Word Pulse</h1>
+        <h3 id="app-description-line">Check the frequency of words per million instances</h3>
+        <div id="error-message-line"></div>
+      </hgroup>
       <textarea
         id="input-field"
         placeholder="Paste text or generate quote"
         rows="4"
         columns="50"
       ></textarea>
-      <button id="submit-button">Get Frequency</button>
-      <button id="quote-button">Get Quote</button>
+      <div id="button-div">
+      <button id="submit-button" role="button">Get Frequency</button>
+      <button id="quote-button" role="button">Get Quote</button>
       <div id="key-container">
         <p id="keys" class="hide">
           <span id="extremely-common">Extremely Common</span>
@@ -31,9 +67,13 @@
       <div id="output-container">
         <p id="word-frequency-display"></p>
         <p id="results-container"></p>
+        <p id="past-searches-line">Past Searches</p>
         <p id="past-searches"></p>
+        <button id="clear-past-searches-button">Clear</button>
       </div>
-    </div>
+    </div> 
+   
+  </div>
     <script src="./assets/script.js"></script>
   </body>
 </html>
