@@ -197,7 +197,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "don't": "do not",
         "Don't": "Do not",
         "won't": "will not",
-        "can't": "cannot",
+        "can't": "can not",
+        "Can't": "Can not",
         "I'm": "I am",
         "it's": "it is",
         "It's": "It is",
@@ -235,9 +236,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "How'd": "How would",
         "Why's": "Why is",
         "why's": "why is",
-        "Let's": "Let us",
-        "let's": "let us",
-        "I'll": "I will",
+        "you've": "you have",
+        "You've": "You have",
         //We will add a bunch more contractions here.
       };
 
