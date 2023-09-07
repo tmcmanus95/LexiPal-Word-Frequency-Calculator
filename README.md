@@ -1,4 +1,4 @@
-# word-checker
+# LexiPal
 
 # Deployed Links :
 
@@ -7,6 +7,18 @@ https://github.com/chicago-august-20231/word-checker
 https://chicago-august-20231.github.io/word-checker/
 
 # Description :
+
+As a team we wanted to come up with an application that makes
+
+learning the english language just a little bit easier for
+
+non english speaking learners. We also wanted to color
+
+code the returned words to show the exact frequency of the 
+
+word and make them different colors to have more 
+
+visual aid for the learner.
 
 # User Story :
 
