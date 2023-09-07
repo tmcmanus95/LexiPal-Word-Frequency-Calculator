@@ -72,26 +72,20 @@ document.addEventListener("DOMContentLoaded", function () {
       wordSpan.classList.add("error");
     }
   }
-
+//takes in expanded text
   async function setFrequency(expandedText) {
-    resultsContainer.textContent = "";
-    pastSearchesLine.style.display = "inline";
-    clearButton.style.display = "inline";
-    console.log("Expanded Text, ", expandedText);
-    var arrayOfUserInput = expandedText.split(/ *- *| +|—+/);
-    console.log("array: ", arrayOfUserInput);
-    var noHyphensArray = arrayOfUserInput.map(function (word) {
+    resultsContainer.textContent = "";  // resets results container.
+    pastSearchesLine.style.display = "inline";// makes past searches text inline.
+    clearButton.style.display = "inline";// makes clear button inline instead of hidden.
+    var arrayOfUserInput = expandedText.split(/ *- *| +|—+/);// array is created by splitting the string at spaces, hyphens, and dashes.
+    var noHyphensArray = arrayOfUserInput.map(function (word) {// gets rid of all hyphens to prevent bugs.
       return word.replace(/-/g);
     });
-    console.log("this is the no hyphens array, ", noHyphensArray);
+   
     var noHyphensOrUndefinedArray = noHyphensArray.filter(function (word) {
       return word !== "undefined";
-    });
-    console.log(
-      "This is the no hyphens or undefined array, I hope, ",
-      noHyphensOrUndefinedArray
-    );
-    var noHyphensOrUndefinedString = noHyphensArray.join(" ");
+    });// only returns items that are undefined.
+    var noHyphensOrUndefinedString = noHyphensArray.join(" ");// turning noHyphensArray into a string.
     var noNumbersString = noHyphensOrUndefinedString.replace(
       /[^a-zA-Z\s;,.?'!-]+/g,
       ""
@@ -224,12 +218,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const expandedWord = contractionWords[word] || word;
         expandedWords.push(expandedWord);
       }
-
+// turns expanded words array into a string.
       const expandedText = expandedWords.join(" ");
 
       //Returns the expanded text, which is then fed back into the setFrequency function instead of the inital user input.
-      console.log(expandedText);
+      
       return expandedText;
+      //if input is bigger than 140 words, returns error message.
     } else {
       submitFewerMessage = document.createElement("h3");
       submitFewerMessage.textContent =
