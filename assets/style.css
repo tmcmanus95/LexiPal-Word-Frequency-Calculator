@@ -1,11 +1,11 @@
 :root {
-  --extremely-common-color: lavender;
-  --very-common-color: lightcyan;
-  --common-color: lightgreen;
+  --extremely-common-color: #00FF00;
+  --very-common-color: #95FF66;
+  --common-color: #C8FFB3;
   --uncommon-color: lightyellow;
-  --very-uncommon-color: lightsalmon;
-  --rare-color: pink;
-  --very-rare-color: indianred;
+  --very-uncommon-color:#FFC2A6;
+  --rare-color: #FF6B5E;
+  --very-rare-color: #FF0000;
 }
 
 #submit-button,
