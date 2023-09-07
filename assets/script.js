@@ -188,8 +188,37 @@ document.addEventListener("DOMContentLoaded", function () {
         "they're": "they are",
         "he's": "he is",
         "you're": "you are",
+        "You're": "You are",
         "doesn't": "does not",
         "Doesn't": "Does not",
+        "they've": "they have",
+        "They've": "They have",
+        "I'd": "I would",
+        "I'll": "I will",
+        "he's": "he is",
+        "He's": "He is",
+        "she's": "she is",
+        "She's": "She is",
+        "She'll": "She will",
+        "she'll": "she will",
+        "He'll": "He will",
+        "he'll": "he will",
+        "There's": "There is",
+        "there's": "there is",
+        "who's": "who is",
+        "Who's": "Who is",
+        "You'd": "You would",
+        "you'd": "you would",
+        "We'd": "We Would",
+        "we'd": "we would",
+        "Who'd": "Who would",
+        "who'd": "who would",
+        "why'd": "why would",
+        "Why'd": "Why would",
+        "how'd": "how would",
+        "How'd": "How would",
+        "Why's": "Why is",
+        "why's": "why is",
         //We will add a bunch more contractions here.
       };
 
@@ -250,6 +279,8 @@ document.addEventListener("DOMContentLoaded", function () {
         wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
       } else if (selectedLanguage === "polish-tab") {
         wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
+      } else if (selectedLanguage === "mandarin-tab") {
+        wordFrequencyDisplay.textContent = `我无法获得频率值 ${wordInputted}.`;
       } else {
         wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
       }
@@ -293,6 +324,18 @@ document.addEventListener("DOMContentLoaded", function () {
             "Wpisz tutaj tekst lub wygeneruj losowe słowo";
           pastSearchesLine.textContent = "Przeszłe Wyszukiwania";
           clearButton.textContent = "Wyczyść";
+          languageContainer.style.display = "none";
+
+          break;
+          case "mandarin-tab":
+          appDescriptionLine.textContent =
+            "检查每百万个实例中英语单词的频率";
+          submitButton.textContent = "获取频率";
+          quoteButton.textContent = "获得报价";
+          inputField.placeholder =
+            "粘贴文本或生成随机引用？";
+          pastSearchesLine.textContent = "过去的搜索";
+          clearButton.textContent = "清除";
           languageContainer.style.display = "none";
           break;
         default:
