@@ -95,38 +95,27 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("This is the new string with no numbers, ", noNumbersString);
     // var noNumbersArray = noNumbersString.join(" ");
     console.log("This is the new array with no numbers, ", noNumbersArray);
-    var apiSearchableArray = noHyphensOrUndefinedString.match(
+    var apiSearchableArray = noHyphensOrUndefinedString.match(// regex method that returns anything that is text followed by an apostraphy or text or hyphen or numerical digits.
       /[a-zA-Z]+('[a-zA-Z]+)*|('[a-zA-Z]+)+|-|\d+/g
     );
-    console.log("This is what the api will search, ", apiSearchableArray);
-
-    console.log(
-      "The apiSearchableArray is this long, ",
-      apiSearchableArray.length
-    );
-    console.log(
-      "The noHypensOrUndefinedArray is this long, ",
-      noHyphensOrUndefinedArray.length
-    );
+    
     for (let i = 0; i < apiSearchableArray.length; i++) {
-      if (apiSearchableArray.length === noHyphensOrUndefinedArray.length) {
+      if (apiSearchableArray.length === noHyphensOrUndefinedArray.length) {// checking for descrepencies between api searchable words and punctuation words. 
         const wordInputted = apiSearchableArray[i];
         const punctuationWord = noHyphensOrUndefinedArray[i];
-        console.log("I am about to search: ", wordInputted);
 
-        // Check if the word contains only letters and apostrophes (no numbers)
+        // Check if the word does not end in apostraphy s. Also checks if it is not undefined.
         if (!wordInputted.endsWith("'s") && wordInputted !== undefined) {
-          const frequencyRate = await getFrequency(wordInputted);
-          const wordSpan = document.createElement("span");
-          console.log("the punctuation word is, ", punctuationWord);
-          wordSpan.textContent = punctuationWord + " ";
+          const frequencyRate = await getFrequency(wordInputted);// calls api with word input.
+          const wordSpan = document.createElement("span");// creates element for that word.
+          wordSpan.textContent = punctuationWord + " ";// sets text content to punctuation accurate version of that word.
           wordSpan.id = "word";
-          assignFrequencyClass(wordSpan, frequencyRate);
-          resultsContainer.appendChild(wordSpan);
+          assignFrequencyClass(wordSpan, frequencyRate);// calls frequency class fuction to alter the background color of that word.
+          resultsContainer.appendChild(wordSpan); //appends element
           wordSpan.addEventListener("click", () =>
-            getSelectedWordFrequency(wordInputted, frequencyRate)
+            getSelectedWordFrequency(wordInputted, frequencyRate)// adds event listener to each each word that returns specific information about thgat word when clicked.
           );
-        } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
+        } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {// if word ends with apostraphy s does the same as the above steps.
           console.log("this word ends with 's: ", wordInputted);
           const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
           //The function then runs as normal again, but with the form of the word without the "'s."
@@ -140,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
             getSelectedWordFrequency(wordBeforeApostrophe, frequencyRate)
           );
         }
-      } else {
+      } else {// if length of 2 arrays are different does the same as above, but instead of text content to puctuation word, sets to the word the api has searched. 
         const wordInputted = apiSearchableArray[i];
         const punctuationWord = noHyphensOrUndefinedArray[i];
         console.log("I am about to search: ", wordInputted);
@@ -150,7 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const frequencyRate = await getFrequency(wordInputted);
           const wordSpan = document.createElement("span");
           console.log("the punctuation word is, ", punctuationWord);
-          wordSpan.textContent = wordInputted + " ";
+          wordSpan.textContent = wordInputted + " ";// change occurs here.
           wordSpan.id = "word";
           assignFrequencyClass(wordSpan, frequencyRate);
           resultsContainer.appendChild(wordSpan);
@@ -159,12 +148,11 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
           console.log("this word ends with 's: ", wordInputted);
-          const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
-          //The function then runs as normal again, but with the form of the word without the "'s."
+          const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); 
           const wordSpan = document.createElement("span");
           const frequencyRate = await getFrequency(wordBeforeApostrophe);
           assignFrequencyClass(wordSpan, frequencyRate);
-          wordSpan.textContent = wordInputted + " ";
+          wordSpan.textContent = wordInputted + " ";// change occurs here.
           wordSpan.id = "word";
           resultsContainer.appendChild(wordSpan);
           wordSpan.addEventListener("click", () =>
@@ -238,12 +226,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getSelectedWordFrequency(wordInputted, frequencyRate) {
-    if (frequencyRate !== undefined) {
+    if (frequencyRate !== undefined) {// checks that word frequency exists.
       wordFrequencyDisplay.removeAttribute("class");
-      assignFrequencyClass(wordFrequencyDisplay, frequencyRate);
+      assignFrequencyClass(wordFrequencyDisplay, frequencyRate);// call assignfrequency class to change background color of wordFrequencyDisplay.
       var selectedLanguage = document.querySelector(
         'input[name="language-tab"]:checked'
-      ).id;
+      ).id;// checks language display, and responds accordingly.
       wordFrequencyDisplay.textContent = "";
       if (selectedLanguage === "korean-tab") {
         wordFrequencyDisplay.textContent = `평균적으로, "${wordInputted}"이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
@@ -252,7 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
       }
-    } else {
+    } else {// if frequency rate is undefined returns error message.
       var selectedLanguage = document.querySelector(
         'input[name="language-tab"]:checked'
       ).id;
