@@ -1,6 +1,12 @@
 # word-checker
 
-Testing to see if readme updates.
+# Deployed Links :
+
+# Description :
+
+# User Story :
+
+# Screenshot :
 
 # Sources :
 
