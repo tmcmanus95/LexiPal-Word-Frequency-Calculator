@@ -196,7 +196,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "don't": "do not",
         "Don't": "Do not",
         "won't": "will not",
-        "can't": "cannot",
+        "can't": "can not",
+        "Can't": "Can not",
         "I'm": "I am",
         "it's": "it is",
         "It's": "It is",
@@ -343,7 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
           languageContainer.style.display = "none";
 
           break;
-          case "mandarin-tab":
+        case "mandarin-tab":
           appDescriptionLine.textContent =
             "检查每百万个实例中英语单词的频率";
           submitButton.textContent = "获取频率";
