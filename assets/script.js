@@ -188,8 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function expandContractionWords(textInput) {
+    // turns inputted tex into an array
     var inputArray = textInput.split(" ");
-    if (inputArray.length <= 14000) {
+    // only runs fuction if input is fewer than 140 words
+    if (inputArray.length <= 140) {
+      // saves searches into local storage.
       saveToLocalStorage(textInput, savedSearches);
       //Dictionary of contractions
       const contractionWords = {
@@ -373,8 +376,11 @@ document.addEventListener("DOMContentLoaded", function () {
   updatePastSearches();
 
   //The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
+  // Calling both fuctions to debug.
   submitButton.addEventListener("click", async function () {
+    //runs expandContractionWords and returns result expanded text.
     const expandedText = expandContractionWords(inputField.value);
+    // runs setFrequecy with expandedText.
     await setFrequency(expandedText);
   });
 
