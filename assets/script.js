@@ -234,6 +234,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "How'd": "How would",
         "Why's": "Why is",
         "why's": "why is",
+        "you've": "you have",
+        "You've": "You have",
         //We will add a bunch more contractions here.
       };
 
@@ -407,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("DATA:", data);
         poemArray = data[0].lines;
         poet = data[0].author;
-        poemString = poemArray.join(" ");
+        poemString = poemArray.join("\n");
         inputField.value = poemString + "\n" + poet;
       });
   }
