@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // var backgroundPicture = document.querySelector("#background-image");
+  // var restOfBackground = document.querySelector("#rest-of-background");
+  // var themeChoices = document.querySelector("#theme-choices-dropdown");
   var languageIcon = document.querySelector("#language-icon");
   var languageToggles = document.querySelectorAll(
     'input[type="radio"][name="language-tab"]'
@@ -73,66 +76,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // function changeTheme() {
+  //   if (themeChoices.value === "spooky") {
+  //     restOfBackground.style.backgroundColor = "var(--spooky-background-color)";
+  //     backgroundPicture.style.backgroundImage = "url('./icons/pumpkin.jpg')";
+  //     textColor = "var(--spooky-text)";
+  //     extremelyCommonColor = "var(--spooky-extremely-common-color)";
+  //     veryCommonColor = "var(--spooky-very-common-color)";
+  //     commonColor = "var(--spooky-common-color)";
+  //     uncommonColor = "var(--spooky-uncommon-color)";
+  //     veryUncommonColor = "var(--spooky-very-uncommon-color)";
+  //     rareColor = "var(--spooky-rare-color)";
+  //     extremelyRareColor = "var(--spooky-very-rare-color)";
+  //   }
+  // }
+
+  //takes in expanded text
   async function setFrequency(expandedText) {
-    resultsContainer.textContent = "";
-    pastSearchesLine.style.display = "inline";
-    clearButton.style.display = "inline";
-    console.log("Expanded Text, ", expandedText);
-    var arrayOfUserInput = expandedText.split(/ *- *| +|—+/);
-    console.log("array: ", arrayOfUserInput);
+    resultsContainer.textContent = ""; // resets results container.
+    pastSearchesLine.style.display = "inline"; // makes past searches text inline.
+    clearButton.style.display = "inline"; // makes clear button inline instead of hidden.
+    var arrayOfUserInput = expandedText.split(/ *- *| +|—+/); // array is created by splitting the string at spaces, hyphens, and dashes.
     var noHyphensArray = arrayOfUserInput.map(function (word) {
+      // gets rid of all hyphens to prevent bugs.
       return word.replace(/-/g);
     });
-    console.log("this is the no hyphens array, ", noHyphensArray);
+
     var noHyphensOrUndefinedArray = noHyphensArray.filter(function (word) {
       return word !== "undefined";
-    });
-    console.log(
-      "This is the no hyphens or undefined array, I hope, ",
-      noHyphensOrUndefinedArray
-    );
-    var noHyphensOrUndefinedString = noHyphensArray.join(" ");
-    var noNumbersString = noHyphensOrUndefinedString.replace(
-      /[^a-zA-Z\s;,.?'!-]+/g,
-      ""
-    );
-    var noNumbersArray = noNumbersString.split(" ");
-    console.log("This is the no numbers array, ", noNumbersArray);
-    console.log("This is the new string with no numbers, ", noNumbersString);
-    // var noNumbersArray = noNumbersString.join(" ");
-    console.log("This is the new array with no numbers, ", noNumbersArray);
+    }); // only returns items that are undefined.
+    var noHyphensOrUndefinedString = noHyphensArray.join(" "); // turning noHyphensArray into a string.
     var apiSearchableArray = noHyphensOrUndefinedString.match(
+      // regex method that returns anything that is text followed by an apostraphy or text or hyphen or numerical digits.
       /[a-zA-Z]+('[a-zA-Z]+)*|('[a-zA-Z]+)+|-|\d+/g
     );
-    console.log("This is what the api will search, ", apiSearchableArray);
 
-    console.log(
-      "The apiSearchableArray is this long, ",
-      apiSearchableArray.length
-    );
-    console.log(
-      "The noHypensOrUndefinedArray is this long, ",
-      noHyphensOrUndefinedArray.length
-    );
     for (let i = 0; i < apiSearchableArray.length; i++) {
       if (apiSearchableArray.length === noHyphensOrUndefinedArray.length) {
+        // checking for descrepencies between api searchable words and punctuation words.
         const wordInputted = apiSearchableArray[i];
         const punctuationWord = noHyphensOrUndefinedArray[i];
-        console.log("I am about to search: ", wordInputted);
 
-        // Check if the word contains only letters and apostrophes (no numbers)
+        // Check if the word does not end in apostraphy s. Also checks if it is not undefined.
         if (!wordInputted.endsWith("'s") && wordInputted !== undefined) {
-          const frequencyRate = await getFrequency(wordInputted);
-          const wordSpan = document.createElement("span");
-          console.log("the punctuation word is, ", punctuationWord);
-          wordSpan.textContent = punctuationWord + " ";
+          const frequencyRate = await getFrequency(wordInputted); // calls api with word input.
+          const wordSpan = document.createElement("span"); // creates element for that word.
+          wordSpan.textContent = punctuationWord + " "; // sets text content to punctuation accurate version of that word.
           wordSpan.id = "word";
-          assignFrequencyClass(wordSpan, frequencyRate);
-          resultsContainer.appendChild(wordSpan);
-          wordSpan.addEventListener("click", () =>
-            getSelectedWordFrequency(wordInputted, frequencyRate)
+          assignFrequencyClass(wordSpan, frequencyRate); // calls frequency class fuction to alter the background color of that word.
+          resultsContainer.appendChild(wordSpan); //appends element
+          wordSpan.addEventListener(
+            "click",
+            () => getSelectedWordFrequency(wordInputted, frequencyRate) // adds event listener to each each word that returns specific information about thgat word when clicked.
           );
         } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
+          // if word ends with apostraphy s does the same as the above steps.
           console.log("this word ends with 's: ", wordInputted);
           const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
           //The function then runs as normal again, but with the form of the word without the "'s."
@@ -147,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         }
       } else {
+        // if length of 2 arrays are different does the same as above, but instead of text content to puctuation word, sets to the word the api has searched.
         const wordInputted = apiSearchableArray[i];
         const punctuationWord = noHyphensOrUndefinedArray[i];
         console.log("I am about to search: ", wordInputted);
@@ -156,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const frequencyRate = await getFrequency(wordInputted);
           const wordSpan = document.createElement("span");
           console.log("the punctuation word is, ", punctuationWord);
-          wordSpan.textContent = wordInputted + " ";
+          wordSpan.textContent = wordInputted + " "; // change occurs here.
           wordSpan.id = "word";
           assignFrequencyClass(wordSpan, frequencyRate);
           resultsContainer.appendChild(wordSpan);
@@ -165,12 +164,11 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
           console.log("this word ends with 's: ", wordInputted);
-          const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
-          //The function then runs as normal again, but with the form of the word without the "'s."
+          const wordBeforeApostrophe = wordInputted.replace(/'s$/, "");
           const wordSpan = document.createElement("span");
           const frequencyRate = await getFrequency(wordBeforeApostrophe);
           assignFrequencyClass(wordSpan, frequencyRate);
-          wordSpan.textContent = wordInputted + " ";
+          wordSpan.textContent = wordInputted + " "; // change occurs here.
           wordSpan.id = "word";
           resultsContainer.appendChild(wordSpan);
           wordSpan.addEventListener("click", () =>
@@ -188,8 +186,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function expandContractionWords(textInput) {
+    // turns inputted tex into an array
     var inputArray = textInput.split(" ");
-    if (inputArray.length <= 14000) {
+    // only runs fuction if input is fewer than 140 words
+    if (inputArray.length <= 140) {
+      // saves searches into local storage.
       saveToLocalStorage(textInput, savedSearches);
       //Dictionary of contractions
       const contractionWords = {
@@ -253,12 +254,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const expandedWord = contractionWords[word] || word;
         expandedWords.push(expandedWord);
       }
-
+      // turns expanded words array into a string.
       const expandedText = expandedWords.join(" ");
 
       //Returns the expanded text, which is then fed back into the setFrequency function instead of the inital user input.
-      console.log(expandedText);
+
       return expandedText;
+      //if input is bigger than 140 words, returns error message.
     } else {
       submitFewerMessage = document.createElement("h3");
       submitFewerMessage.textContent =
@@ -273,11 +275,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getSelectedWordFrequency(wordInputted, frequencyRate) {
     if (frequencyRate !== undefined) {
+      // checks that word frequency exists.
       wordFrequencyDisplay.removeAttribute("class");
-      assignFrequencyClass(wordFrequencyDisplay, frequencyRate);
+      assignFrequencyClass(wordFrequencyDisplay, frequencyRate); // call assignfrequency class to change background color of wordFrequencyDisplay.
       var selectedLanguage = document.querySelector(
         'input[name="language-tab"]:checked'
-      ).id;
+      ).id; // checks language display, and responds accordingly.
       wordFrequencyDisplay.textContent = "";
       if (selectedLanguage === "korean-tab") {
         wordFrequencyDisplay.textContent = `평균적으로, "${wordInputted}"이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
@@ -287,6 +290,7 @@ document.addEventListener("DOMContentLoaded", function () {
         wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
       }
     } else {
+      // if frequency rate is undefined returns error message.
       var selectedLanguage = document.querySelector(
         'input[name="language-tab"]:checked'
       ).id;
@@ -345,12 +349,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
           break;
         case "mandarin-tab":
-          appDescriptionLine.textContent =
-            "检查每百万个实例中英语单词的频率";
+          appDescriptionLine.textContent = "检查每百万个实例中英语单词的频率";
           submitButton.textContent = "获取频率";
           quoteButton.textContent = "获得报价";
-          inputField.placeholder =
-            "粘贴文本或生成随机引用？";
+          inputField.placeholder = "粘贴文本或生成随机引用？";
           pastSearchesLine.textContent = "过去的搜索";
           clearButton.textContent = "清除";
           languageContainer.style.display = "none";
@@ -401,7 +403,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getPoem() {
-    requestURl = "https://poetrydb.org/linecount,random/5;1";
+    requestURl = "https://poetrydb.org/linecount,random/3;1";
     fetch(requestURl)
       .then(function (response) {
         return response.json();
@@ -415,12 +417,15 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  quoteButton.addEventListener("click", getQuote);
+  quoteButton.addEventListener("click", getPoem);
   updatePastSearches();
 
   //The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
+  // Calling both fuctions to debug.
   submitButton.addEventListener("click", async function () {
+    //runs expandContractionWords and returns result expanded text.
     const expandedText = expandContractionWords(inputField.value);
+    // runs setFrequecy with expandedText.
     await setFrequency(expandedText);
   });
 
