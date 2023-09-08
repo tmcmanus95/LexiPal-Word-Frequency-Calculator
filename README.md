@@ -30,7 +30,7 @@ SO THAT I can see which words are used more or less often the better help myself
 
 # Screenshot :
 
-![Alt text](image.png)
+![Alt text](./assets/icons/screenshot.png)
 
 # Sources :
 
