@@ -42,20 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
     return Math.floor(Math.random() * max);
   }
 
-  function getQuote() {
-    inputField.value = "";
-    var slip_id = getRandomNum(220);
-    quoteUrl = `https://api.adviceslip.com/advice/${slip_id}`;
-    fetch(quoteUrl)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        var quote = data.slip.advice;
-        inputField.value = quote;
-      });
-  }
-
   function assignFrequencyClass(wordSpan, frequencyRate) {
     if (frequencyRate > 1000) {
       wordSpan.classList.add("extremely-common");
@@ -75,21 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
       wordSpan.classList.add("error");
     }
   }
-
-  // function changeTheme() {
-  //   if (themeChoices.value === "spooky") {
-  //     restOfBackground.style.backgroundColor = "var(--spooky-background-color)";
-  //     backgroundPicture.style.backgroundImage = "url('./icons/pumpkin.jpg')";
-  //     textColor = "var(--spooky-text)";
-  //     extremelyCommonColor = "var(--spooky-extremely-common-color)";
-  //     veryCommonColor = "var(--spooky-very-common-color)";
-  //     commonColor = "var(--spooky-common-color)";
-  //     uncommonColor = "var(--spooky-uncommon-color)";
-  //     veryUncommonColor = "var(--spooky-very-uncommon-color)";
-  //     rareColor = "var(--spooky-rare-color)";
-  //     extremelyRareColor = "var(--spooky-very-rare-color)";
-  //   }
-  // }
 
   //takes in expanded text
   async function setFrequency(expandedText) {

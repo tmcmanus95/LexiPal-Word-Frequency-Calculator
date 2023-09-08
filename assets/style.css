@@ -8,16 +8,6 @@
   --very-uncommon-color: #ffc2a6;
   --rare-color: #ff6b5e;
   --very-rare-color: #ff0000;
-
-  --spooky-background-color: black;
-  --spooky-text-color: white;
-  --spooky-extremely-common-color: #ffae00;
-  --spooky-very-common-color: #fed876;
-  --spooky-common-color: #ffe5c8;
-  --spooky-uncommon-color: rgb(244, 186, 249);
-  --spooky-very-uncommon-color: #dd7bf8;
-  --spooky-rare-color: #ab18dc;
-  --spooky-very-rare-color: #74008e;
 }
 
 #submit-button,

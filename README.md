@@ -35,3 +35,11 @@ SO THAT I can see which words are used more or less often the better help myself
 # Sources :
 
 language icon: https://www.flaticon.com/free-icon/language_484633
+
+Word Frequency API: https://www.datamuse.com/api/
+
+Poetry Quote API: https://poetrydb.org/index.html
+
+"getRandonNum" (script.js line 22) function taken from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+
+functions that used regex were created with this website: https://regexr.com
