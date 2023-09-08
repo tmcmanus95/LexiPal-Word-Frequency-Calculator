@@ -7,8 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     'input[type="radio"][name="language-tab"]'
   );
   var languageContainer = document.querySelector("#languages-container");
-  var titleTextLine = document.querySelector("#title-text");
   var appDescriptionLine = document.querySelector("#app-description-line");
+  var keyContainer = document.querySelector("#key-container");
   var errorMessageLine = document.querySelector("#error-message-line");
   var inputField = document.querySelector("#input-field");
   var quoteButton = document.querySelector("#quote-button");
@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
     resultsContainer.textContent = ""; // resets results container.
     pastSearchesLine.style.display = "inline"; // makes past searches text inline.
     clearButton.style.display = "inline"; // makes clear button inline instead of hidden.
+    keyContainer.style.display = "block";
     var arrayOfUserInput = expandedText.split(/ *- *| +|—+/); // array is created by splitting the string at spaces, hyphens, and dashes.
     var noHyphensArray = arrayOfUserInput.map(function (word) {
       // gets rid of all hyphens to prevent bugs.
@@ -285,6 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getSelectedWordFrequency(wordInputted, frequencyRate) {
+    wordFrequencyDisplay.style.display = "block";
     if (frequencyRate !== undefined) {
       // checks that word frequency exists.
       wordFrequencyDisplay.removeAttribute("class");
@@ -311,9 +313,9 @@ document.addEventListener("DOMContentLoaded", function () {
       wordFrequencyDisplay.textContent = "";
       wordFrequencyDisplay.classList.add("error");
       if (selectedLanguage === "korean-tab") {
-        wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
+        wordFrequencyDisplay.textContent = `${wordInputted}의 빈도를 찾을 수 없었습니다. `;
       } else if (selectedLanguage === "polish-tab") {
-        wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
+        wordFrequencyDisplay.textContent = `Nie udało mi się znaleźć częstotliwości dla ${wordInputted}.`;
       } else if (selectedLanguage === "mandarin-tab") {
         wordFrequencyDisplay.textContent = `我无法获得频率值 ${wordInputted}.`;
       } else if (selectedLanguage === "french-tab") {
@@ -373,15 +375,17 @@ document.addEventListener("DOMContentLoaded", function () {
           clearButton.textContent = "清除";
           languageContainer.style.display = "none";
           break;
-          case "french-tab":
-            appDescriptionLine.textContent = "Vérifiez la fréquence des mots anglais par million d'instances";
-            submitButton.textContent = "Obtenir la fréquence";
-            quoteButton.textContent = "Obtenez un poème";
-            inputField.placeholder = "Coller du texte ou générer un devis aléatoire ?";
-            pastSearchesLine.textContent = "Recherches passées";
-            clearButton.textContent = "Claire";
-            languageContainer.style.display = "none";
-            break;
+        case "french-tab":
+          appDescriptionLine.textContent =
+            "Vérifiez la fréquence des mots anglais par million d'instances";
+          submitButton.textContent = "Obtenir la fréquence";
+          quoteButton.textContent = "Obtenez un poème";
+          inputField.placeholder =
+            "Coller du texte ou générer un devis aléatoire ?";
+          pastSearchesLine.textContent = "Recherches passées";
+          clearButton.textContent = "Claire";
+          languageContainer.style.display = "none";
+          break;
         default:
       }
     }

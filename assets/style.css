@@ -1,13 +1,13 @@
 :root {
   --background-color: bisque;
   --text-color: black;
-  --extremely-common-color: #00ff00;
-  --very-common-color: #95ff66;
-  --common-color: #c8ffb3;
-  --uncommon-color: lightyellow;
-  --very-uncommon-color: #ffc2a6;
-  --rare-color: #ff6b5e;
-  --very-rare-color: #ff0000;
+  --extremely-common-color: #81f681;
+  --very-common-color: #cbffb5;
+  --common-color: #defed2;
+  --uncommon-color: #fdfdde;
+  --very-uncommon-color: #fdb2b2;
+  --rare-color: #fd8c8c;
+  --very-rare-color: #ff6969;
 }
 
 #submit-button,
@@ -47,6 +47,17 @@
 #footer-info {
   position: fixed;
   bottom: 0;
+}
+#key-container {
+  margin-bottom: 5px;
+  display: none;
+}
+
+#image-of-key {
+  border-radius: 15px;
+  margin-bottom: 5px;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
 }
 
 #stuff-on-top-of-the-background-image {
@@ -89,6 +100,7 @@
 
 #languages-container {
   display: none;
+  font-size: 18px;
 }
 
 #word-frequency-display {
@@ -96,6 +108,9 @@
   padding: 10px;
   border-radius: 15px;
   box-shadow: 5px 5px 5px grey;
+  display: none;
+  opacity: 0;
+  animation: fadeIn 1s forwards;
 }
 
 .hide {
@@ -171,10 +186,15 @@
   }
 }
 @media (max-width: 550px) {
+  #languages-container {
+    display: none;
+    font-size: 10px;
+  }
   #submit-button,
   #quote-button {
     width: 13rem;
   }
+
   #app-description-line {
     margin-top: 10px;
     font-size: 10px;
