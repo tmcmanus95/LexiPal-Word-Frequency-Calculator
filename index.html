@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Word Frequency</title>
+    <title>LexiPal | Word Frequency Calculator</title>
+    <link rel="icon" href="./assets/icons/lexicpalicon.png"/>
     <link rel="stylesheet" href="./assets/style.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
   </head>
@@ -12,7 +13,7 @@
       <div id="background-image"></div>
       <div id="rest-of-background"></div>
       <div id="stuff-on-top-of-the-background-image">
-      <img src="./assets/icons/languageicon.png" id="language-icon" />
+      <img src="./assets/icons/languageicon.png" alt-text="language toggle button" id="language-icon" />
       <div id="languages-container">
         <input
         type="radio"
@@ -48,7 +49,7 @@
     <div id="input-container">
       <hgroup>
         <h1 id="title-text">LexiPal</h1>
-        <h3 id="app-description-line">Check the frequency of words per million instances</h3>
+        <h3 id="app-description-line">Check the frequency of English words per million instances</h3>
         <div id="error-message-line"></div>
       </hgroup>
       <textarea
