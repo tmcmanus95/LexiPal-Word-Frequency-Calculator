@@ -297,6 +297,9 @@ document.addEventListener("DOMContentLoaded", function () {
         wordFrequencyDisplay.textContent = `평균적으로, "${wordInputted}"이라는 단어는 영어로 백만 단어 당 ${frequencyRate} 나타납니다.`;
       } else if (selectedLanguage === "polish-tab") {
         wordFrequencyDisplay.textContent = `Średnio te słowo, "${wordInputted}" pokazuje się ${frequencyRate} razy na milion po Angielsku`;
+      } else if (selectedLanguage === "french-tab") {
+        wordFrequencyDisplay.textContent = `En moyenne, le mot, "${wordInputted}" apparaît ${frequencyRate} 
+        fois par million de mots en anglais.`;
       } else {
         wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
       }
@@ -313,6 +316,8 @@ document.addEventListener("DOMContentLoaded", function () {
         wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
       } else if (selectedLanguage === "mandarin-tab") {
         wordFrequencyDisplay.textContent = `我无法获得频率值 ${wordInputted}.`;
+      } else if (selectedLanguage === "french-tab") {
+        wordFrequencyDisplay.textContent = `Je n'ai pas pu obtenir une valeur de fréquence pour ${wordInputted}.`;
       } else {
         wordFrequencyDisplay.textContent = `I could not get a frequency value for ${wordInputted}.`;
       }
@@ -330,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
           appDescriptionLine.textContent =
             "Check the frequency of English words per million instances";
           submitButton.textContent = "Get Frequency";
-          quoteButton.textContent = "Get quote";
+          quoteButton.textContent = "Get poem";
           inputField.placeholder = "Paste text or generate random quote?";
           pastSearchesLine.textContent = "Past Searches";
           clearButton.textContent = "Clear";
@@ -368,6 +373,15 @@ document.addEventListener("DOMContentLoaded", function () {
           clearButton.textContent = "清除";
           languageContainer.style.display = "none";
           break;
+          case "french-tab":
+            appDescriptionLine.textContent = "Vérifiez la fréquence des mots anglais par million d'instances";
+            submitButton.textContent = "Obtenir la fréquence";
+            quoteButton.textContent = "Obtenez un poème";
+            inputField.placeholder = "Coller du texte ou générer un devis aléatoire ?";
+            pastSearchesLine.textContent = "Recherches passées";
+            clearButton.textContent = "Claire";
+            languageContainer.style.display = "none";
+            break;
         default:
       }
     }
