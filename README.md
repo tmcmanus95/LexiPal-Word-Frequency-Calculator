@@ -31,6 +31,7 @@ LexiPal is a JavaScript application that uses the Datamuse word-finding query en
 # Screenshot :
 
 ![LexiPal Screen](./assets/icons/screenshot.png)
+![LexiPal functionality](./assets/icons/screenshot2.png)
 
 # Sources :
 
@@ -48,7 +49,7 @@ FadeIn CSS animation (styles.css line 144) taken from: https://blog.hubspot.com/
 
 Functions that used regex were created via the aid of this website: https://regexr.com
 
-Thank you to the following individuals for their transation expertise:
+Thank you to the following individuals for their translation expertise:
 French - Tom Maude-Griffin
 Korean - 송유경
 Polish - Paulina Motoszko
