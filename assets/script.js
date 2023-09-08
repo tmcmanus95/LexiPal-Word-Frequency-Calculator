@@ -459,7 +459,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  quoteButton.addEventListener("click", getQuote);
+  quoteButton.addEventListener("click", getPoem);
   updatePastSearches();
 
   //The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
