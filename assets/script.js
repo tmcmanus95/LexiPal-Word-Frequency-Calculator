@@ -38,10 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  function getRandomNum(max) {
-    return Math.floor(Math.random() * max);
-  }
-
   function assignFrequencyClass(wordSpan, frequencyRate) {
     if (frequencyRate > 1000) {
       wordSpan.classList.add("extremely-common");
@@ -252,8 +248,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "That'd": "That would",
         "that'd": "that would",
         "These're": "These are",
-        "these're": "these are",// comment
-                        //We will add a bunch more contractions here.
+        "these're": "these are", // comment
+        //We will add a bunch more contractions here.
       };
 
       //Creates an array containing all inputted word, split at the space using regex
