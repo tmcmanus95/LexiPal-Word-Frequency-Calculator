@@ -462,7 +462,7 @@ document.addEventListener("DOMContentLoaded", function () {
   quoteButton.addEventListener("click", getPoem);
   updatePastSearches();
 
-  //The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
+  //The submit button now calls both functions asyncronously, waiting for one to finish before running the other!
   submitButton.addEventListener("click", async function () {
     const expandedText = expandContractionWords(inputField.value);
     await setFrequency(expandedText);
