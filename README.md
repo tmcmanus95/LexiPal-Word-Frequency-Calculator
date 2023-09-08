@@ -43,3 +43,7 @@ Poetry Quote API: https://poetrydb.org/index.html
 "getRandonNum" (script.js line 22) function taken from: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 
 functions that used regex were created with this website: https://regexr.com
+
+pastel rainbow picture taken from https://www.deviantart.com/queenazraelabaddon/art/Pastel-Rainbow-Ombre-783494420
+
+favicon tab: https://www.flaticon.com/free-icon/data_2326855?term=dictionary&related_id=2326855
