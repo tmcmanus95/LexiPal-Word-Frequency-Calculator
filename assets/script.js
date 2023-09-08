@@ -280,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "That'd": "That would",
         "that'd": "that would",
         "These're": "These are",
-        "these're": "these are",
+        "these're": "these are",// comment
                         //We will add a bunch more contractions here.
       };
 
