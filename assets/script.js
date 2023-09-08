@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //takes in expanded text
   async function setFrequency(expandedText) {
+    inputField.textContent = "";
     resultsContainer.textContent = ""; // resets results container.
     pastSearchesLine.style.display = "inline"; // makes past searches text inline.
     clearButton.style.display = "inline"; // makes clear button inline instead of hidden.
@@ -99,7 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
           );
         } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
           // if word ends with apostraphy s does the same as the above steps.
-          console.log("this word ends with 's: ", wordInputted);
           const wordBeforeApostrophe = wordInputted.replace(/'s$/, ""); //This line grabs the value that is before the "'s"
           //The function then runs as normal again, but with the form of the word without the "'s."
           const wordSpan = document.createElement("span");
@@ -116,13 +116,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // if length of 2 arrays are different does the same as above, but instead of text content to puctuation word, sets to the word the api has searched.
         const wordInputted = apiSearchableArray[i];
         const punctuationWord = noHyphensOrUndefinedArray[i];
-        console.log("I am about to search: ", wordInputted);
 
         // Check if the word contains only letters and apostrophes (no numbers)
         if (!wordInputted.endsWith("'s") && wordInputted !== undefined) {
           const frequencyRate = await getFrequency(wordInputted);
           const wordSpan = document.createElement("span");
-          console.log("the punctuation word is, ", punctuationWord);
           wordSpan.textContent = wordInputted + " "; // change occurs here.
           wordSpan.id = "word";
           assignFrequencyClass(wordSpan, frequencyRate);
@@ -131,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function () {
             getSelectedWordFrequency(wordInputted, frequencyRate)
           );
         } else if (wordInputted.endsWith("'s") && wordInputted !== undefined) {
-          console.log("this word ends with 's: ", wordInputted);
           const wordBeforeApostrophe = wordInputted.replace(/'s$/, "");
           const wordSpan = document.createElement("span");
           const frequencyRate = await getFrequency(wordBeforeApostrophe);
@@ -181,6 +178,8 @@ document.addEventListener("DOMContentLoaded", function () {
         "They've": "They have",
         "I'd": "I would",
         "I'll": "I will",
+        "you'll": "you will",
+        "You'll": "You will",
         "he's": "he is",
         "He's": "He is",
         "she's": "she is",
@@ -338,7 +337,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "Check the frequency of English words per million instances";
           submitButton.textContent = "Get Frequency";
           quoteButton.textContent = "Get poem";
-          inputField.placeholder = "Paste text or generate random quote?";
+          inputField.placeholder = "Paste text here or generate a random poem";
           pastSearchesLine.textContent = "Past Searches";
           clearButton.textContent = "Clear";
           languageContainer.style.display = "none";
@@ -432,17 +431,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getPoem() {
-    requestURl = "https://poetrydb.org/linecount,random/3;1";
+    requestURl = "https://poetrydb.org/linecount,random/4;1";
     fetch(requestURl)
       .then(function (response) {
         return response.json();
       })
       .then(function (data) {
-        console.log("DATA:", data);
+        inputField.textContent = " ";
         poemArray = data[0].lines;
         poet = data[0].author;
         poemString = poemArray.join("\n");
-        inputField.value = poemString + "\n" + poet;
+        inputField.textContent = poemString + "\n" + poet;
       });
   }
 
