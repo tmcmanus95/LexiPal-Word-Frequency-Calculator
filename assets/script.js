@@ -300,6 +300,8 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (selectedLanguage === "french-tab") {
         wordFrequencyDisplay.textContent = `En moyenne, le mot, "${wordInputted}" apparaît ${frequencyRate} 
         fois par million de mots en anglais.`;
+      } else if (selectedLanguage === "mandarin-tab") {
+        wordFrequencyDisplay.textContent = `平均而言，${wordInputted}一词每百万字出现 ${frequencyRate} 次。`;
       } else {
         wordFrequencyDisplay.textContent = `On average, the word, "${wordInputted}" appears ${frequencyRate} times per million words in English.`;
       }
@@ -330,6 +332,9 @@ document.addEventListener("DOMContentLoaded", function () {
       languageIcon.style.display = "inline";
       const selectedLanguage = event.target.id;
       wordFrequencyDisplay.textContent = "";
+      wordFrequencyDisplay.style.display = "none";
+      keyContainer.style.display = "none";
+      resultsContainer.textContent = "";
       switch (selectedLanguage) {
         case "english-tab":
           appDescriptionLine.textContent =
@@ -449,7 +454,6 @@ document.addEventListener("DOMContentLoaded", function () {
   updatePastSearches();
 
   //The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
-  // Calling both fuctions to debug.
   submitButton.addEventListener("click", async function () {
     //runs expandContractionWords and returns result expanded text.
     const expandedText = expandContractionWords(inputField.value);
