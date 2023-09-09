@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // var backgroundPicture = document.querySelector("#background-image");
-  // var restOfBackground = document.querySelector("#rest-of-background");
-  // var themeChoices = document.querySelector("#theme-choices-dropdown");
   var languageIcon = document.querySelector("#language-icon");
   var languageToggles = document.querySelectorAll(
     'input[type="radio"][name="language-tab"]'
@@ -60,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   //takes in expanded text
   async function setFrequency(expandedText) {
-    inputField.textContent = "";
+    inputField.value = "";
     resultsContainer.textContent = ""; // resets results container.
     pastSearchesLine.style.display = "inline"; // makes past searches text inline.
     clearButton.style.display = "inline"; // makes clear button inline instead of hidden.
@@ -115,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         // if length of 2 arrays are different does the same as above, but instead of text content to puctuation word, sets to the word the api has searched.
         const wordInputted = apiSearchableArray[i];
-        const punctuationWord = noHyphensOrUndefinedArray[i];
 
         // Check if the word contains only letters and apostrophes (no numbers)
         if (!wordInputted.endsWith("'s") && wordInputted !== undefined) {
@@ -269,17 +265,20 @@ document.addEventListener("DOMContentLoaded", function () {
       const expandedText = expandedWords.join(" ");
 
       //Returns the expanded text, which is then fed back into the setFrequency function instead of the inital user input.
+      inputField.textContent = "";
 
       return expandedText;
+
       //if input is bigger than 140 words, returns error message.
     } else {
       submitFewerMessage = document.createElement("h3");
       submitFewerMessage.textContent =
-        "Please submit fewer than 50 words at a time.";
+        "Please submit fewer than 140 words at a time.";
       errorMessageLine.appendChild(submitFewerMessage);
       setTimeout(() => {
         errorMessageLine.removeChild(submitFewerMessage);
       }, 2000);
+
       return;
     }
   }
@@ -400,8 +399,8 @@ document.addEventListener("DOMContentLoaded", function () {
       pastSearchLine.className = "past-search-row";
       pastSearchLine.textContent = pastSearch;
       pastSearchLine.addEventListener("click", function () {
-        inputField.textContent = "";
-        inputField.textContent = pastSearch;
+        inputField.value = "";
+        inputField.value = pastSearch;
       });
       pastSearchesContainer.appendChild(pastSearchLine);
     });
@@ -437,15 +436,16 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then(function (data) {
-        inputField.textContent = " ";
+        inputField.value = "";
         poemArray = data[0].lines;
         poet = data[0].author;
         poemString = poemArray.join("\n");
-        inputField.textContent = poemString + "\n" + poet;
+        inputField.value = poemString + "\n" + poet;
       });
   }
 
   quoteButton.addEventListener("click", getPoem);
+
   updatePastSearches();
 
   //The submit button now calls both functions asyncronously, waiting for one to finish before running the other.
