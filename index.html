@@ -13,8 +13,15 @@
       <div id="background-image"></div>
       <div id="rest-of-background"></div>
       <div id="stuff-on-top-of-the-background-image">
-      <img src="./assets/icons/languageicon.png" alt-text="language toggle button" id="language-icon" />
-      <div id="languages-container">
+        <img src="./assets/icons/languageicon.png" alt-text="language toggle button" id="language-icon" />
+        <div id="languages-container">
+        <input
+        type="radio"
+        id="mandarin-tab"
+        class="language-tab"
+        name="language-tab"
+        />
+        <label for="mandarin" class="language-tab">普通话</label>
         <input
         type="radio"
         id="english-tab"
@@ -25,32 +32,25 @@
         <label for="english" class="language-tab">English</label>
         <input
         type="radio"
-        id="korean-tab"
+        id="french-tab"
         class="language-tab"
         name="language-tab"
-      />
-        <label for="korean" class="language-tab">한국어</label>
+        />
+        <label for="french" class="language-tab">Français</label>
         <input
         type="radio"
         id="polish-tab"
         class="language-tab"
         name="language-tab"
-      />
+        />
         <label for="polish" class="language-tab">Polski</label>
         <input
         type="radio"
-        id="mandarin-tab"
-        class="language-tab"
-        name="language-tab"
-        />
-        <label for="mandarin" class="language-tab">普通话</label>
-        <input
-        type="radio"
-        id="french-tab"
+        id="korean-tab"
         class="language-tab"
         name="language-tab"
       />
-        <label for="french" class="language-tab">Français</label>
+        <label for="korean" class="language-tab">한국어</label>
       </div>
     </header>
     <div id="input-container">
@@ -61,7 +61,7 @@
       </hgroup>
       <textarea
         id="input-field"
-        placeholder="Paste text or generate quote"
+        placeholder="Paste text here or generate a random poem"
         rows="4"
         columns="50"
       ></textarea>
@@ -69,15 +69,7 @@
       <button id="submit-button" role="button">Get Frequency</button>
       <button id="quote-button" role="button">Get Poem</button>
       <div id="key-container">
-        <p id="keys" class="hide">
-          <span id="extremely-common">Extremely Common</span>
-          <span id="very-common">Very Common</span>
-          <span id="common">Common</span>
-          <span id="uncommon">Uncommon</span>
-          <span id="very-uncommon">Very Uncommon</span>
-          <span id="rare">Rare</span>
-          <span id="extremely-rare">Extremely Rare</span>
-        </p>
+        <img src="./assets/icons/key.png" alt-text="image-of-key" id="image-of-key">
       </div>
       <div id="output-container">
         <p id="word-frequency-display"></p>
@@ -87,9 +79,9 @@
         <button id="clear-past-searches-button">Clear</button>
       </div>
     </div> 
-    <footer id="footer">Flower Boys ©2023</footer>
+    <footer id="footer"><a href="https://github.com/chicago-august-20231" target="_blank">Flower Boys ©2023</a></footer>
    
   </div>
-    <script src="./assets/script.js"></script>
+    <script src="./assets/script.js" ></script>
   </body>
 </html>
