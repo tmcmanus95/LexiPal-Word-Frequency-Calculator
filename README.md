@@ -6,7 +6,7 @@ A JavaScript application that allows users to easily visualize the frequency of 
 
 Github Repository: https://github.com/chicago-august-20231/word-checker
 
-Live Application Link: https://chicago-august-20231.github.io/word-checker/
+Live Application Link: https://chicago-august-20231.github.io/Word-Frequency-Calculator/
 
 # User Story :
 
