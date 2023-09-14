@@ -1,11 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
+  var backgroundImage = document.querySelector("#background-image");
   var languageIcon = document.querySelector("#language-icon");
   var languageToggles = document.querySelectorAll(
     'input[type="radio"][name="language-tab"]'
   );
+  var themeIcon = document.querySelector("#theme-icon");
+  var themeToggles = document.querySelectorAll(
+    'input[type="radio"][name="theme-tab"]'
+  );
+  var themeContainer = document.querySelector("#theme-container");
   var languageContainer = document.querySelector("#languages-container");
+  var titleText = document.querySelector("#title-text");
   var appDescriptionLine = document.querySelector("#app-description-line");
   var keyContainer = document.querySelector("#key-container");
+  var imageOfKey = document.querySelector("#image-of-key");
   var errorMessageLine = document.querySelector("#error-message-line");
   var inputField = document.querySelector("#input-field");
   var quoteButton = document.querySelector("#quote-button");
@@ -36,22 +44,64 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function assignFrequencyClass(wordSpan, frequencyRate) {
-    if (frequencyRate > 1000) {
-      wordSpan.classList.add("extremely-common");
-    } else if (frequencyRate >= 400 && frequencyRate < 1000) {
-      wordSpan.classList.add("very-common");
-    } else if (frequencyRate >= 80 && frequencyRate < 400) {
-      wordSpan.classList.add("common");
-    } else if (frequencyRate >= 5 && frequencyRate < 80) {
-      wordSpan.classList.add("uncommon");
-    } else if (frequencyRate >= 1 && frequencyRate < 5) {
-      wordSpan.classList.add("very-uncommon");
-    } else if (frequencyRate > 0.5 && frequencyRate < 1) {
-      wordSpan.classList.add("rare");
-    } else if (frequencyRate > 0.001 && frequencyRate < 0.5) {
-      wordSpan.classList.add("extremely-rare");
-    } else {
-      wordSpan.classList.add("error");
+    var selectedTheme = document.querySelector(
+      'input[name="theme-tab"]:checked'
+    ).id;
+    if (selectedTheme === "rainbow-theme") {
+      if (frequencyRate > 1000) {
+        wordSpan.classList.add("rainbow-extremely-common");
+      } else if (frequencyRate >= 400 && frequencyRate < 1000) {
+        wordSpan.classList.add("rainbow-very-common");
+      } else if (frequencyRate >= 80 && frequencyRate < 400) {
+        wordSpan.classList.add("rainbow-common");
+      } else if (frequencyRate >= 5 && frequencyRate < 80) {
+        wordSpan.classList.add("rainbow-uncommon");
+      } else if (frequencyRate >= 1 && frequencyRate < 5) {
+        wordSpan.classList.add("rainbow-very-uncommon");
+      } else if (frequencyRate > 0.5 && frequencyRate < 1) {
+        wordSpan.classList.add("rainbow-rare");
+      } else if (frequencyRate > 0.001 && frequencyRate < 0.5) {
+        wordSpan.classList.add("rainbow-extremely-rare");
+      } else {
+        wordSpan.classList.add("rainbow-error");
+      }
+    } else if (selectedTheme === "sky-theme") {
+      if (frequencyRate > 1000) {
+        wordSpan.classList.add("sky-extremely-common");
+      } else if (frequencyRate >= 400 && frequencyRate < 1000) {
+        wordSpan.classList.add("sky-very-common");
+      } else if (frequencyRate >= 80 && frequencyRate < 400) {
+        wordSpan.classList.add("sky-common");
+      } else if (frequencyRate >= 5 && frequencyRate < 80) {
+        wordSpan.classList.add("sky-uncommon");
+      } else if (frequencyRate >= 1 && frequencyRate < 5) {
+        wordSpan.classList.add("sky-very-uncommon");
+      } else if (frequencyRate > 0.5 && frequencyRate < 1) {
+        wordSpan.classList.add("sky-rare");
+      } else if (frequencyRate > 0.001 && frequencyRate < 0.5) {
+        wordSpan.classList.add("sky-extremely-rare");
+      } else {
+        wordSpan.classList.add("sky-error");
+      }
+    }
+    if (selectedTheme === "earth-theme") {
+      if (frequencyRate > 1000) {
+        wordSpan.classList.add("earth-extremely-common");
+      } else if (frequencyRate >= 400 && frequencyRate < 1000) {
+        wordSpan.classList.add("earth-very-common");
+      } else if (frequencyRate >= 80 && frequencyRate < 400) {
+        wordSpan.classList.add("earth-common");
+      } else if (frequencyRate >= 5 && frequencyRate < 80) {
+        wordSpan.classList.add("earth-uncommon");
+      } else if (frequencyRate >= 1 && frequencyRate < 5) {
+        wordSpan.classList.add("earth-very-uncommon");
+      } else if (frequencyRate > 0.5 && frequencyRate < 1) {
+        wordSpan.classList.add("earth-rare");
+      } else if (frequencyRate > 0.001 && frequencyRate < 0.5) {
+        wordSpan.classList.add("earth-extremely-rare");
+      } else {
+        wordSpan.classList.add("earth-error");
+      }
     }
   }
 
@@ -402,6 +452,7 @@ document.addEventListener("DOMContentLoaded", function () {
       savedSearches.push(pastSearch);
       var pastSearchLine = document.createElement("p");
       pastSearchLine.className = "past-search-row";
+      pastSearchLine.id = "past-search-line";
       pastSearchLine.textContent = pastSearch;
       pastSearchLine.addEventListener("click", function () {
         inputField.value = "";
@@ -434,6 +485,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function showThemes() {
+    themeIcon.style.display = "";
+    if (themeContainer.style.display === "inline") {
+      themeContainer.style.display = "none";
+    } else {
+      themeContainer.style.display = "inline";
+    }
+  }
+
   function getPoem() {
     requestURl = "https://poetrydb.org/linecount,random/4;1";
     fetch(requestURl)
@@ -449,6 +509,69 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+  function changeTheme(event) {
+    const selectedTheme = event.target.id;
+    resultsContainer.textContent = "";
+    keyContainer.style.display = "none";
+    wordFrequencyDisplay.style.display = "none";
+    if (selectedTheme === "spooky-theme") {
+      titleText.style.backgroundColor = "black";
+      titleText.style.color = "white";
+      backgroundImage.style.backgroundImage =
+        "url('./assets/icons/spookybackground2.png')";
+    } else if (selectedTheme === "rainbow-theme") {
+      titleText.style.backgroundColor = "white";
+      titleText.style.color = "black";
+      backgroundImage.style.backgroundImage =
+        "url('./assets/icons/rainbow11.jpg')";
+      titleText.style.boxShadow = "5px 5px 5px grey";
+      imageOfKey.src = "./assets/icons/key.png";
+      titleText.style.backgroundColor = "white";
+      inputField.style.backgroundColor = "white";
+      quoteButton.style.backgroundColor = "#1e88e5";
+      submitButton.style.backgroundColor = "#1e88e5";
+      clearButton.style.backgroundColor = "#1e88e5";
+      quoteButton.style.color = "white";
+      submitButton.style.color = "white";
+      clearButton.style.color = "white";
+    } else if (selectedTheme === "sky-theme") {
+      titleText.style.backgroundColor = "white";
+      titleText.style.color = "black";
+      backgroundImage.style.backgroundImage =
+        "url('./assets/icons/skybackground.png')";
+      imageOfKey.src = "./assets/icons/skykey.png";
+      titleText.style.boxShadow = "5px 5px 5px grey";
+      pastSearchesContainer.style.color = "grey";
+      titleText.style.backgroundColor = "white";
+      inputField.style.backgroundColor = "white";
+      quoteButton.style.backgroundColor = "powderblue";
+      submitButton.style.backgroundColor = "powderblue";
+      clearButton.style.backgroundColor = "powderblue";
+      quoteButton.style.color = "black";
+      submitButton.style.color = "black";
+      clearButton.style.color = "black";
+    } else if (selectedTheme === "earth-theme") {
+      titleText.style.backgroundColor = "white";
+      inputField.style.backgroundColor = "white";
+
+      titleText.style.color = "black";
+      backgroundImage.style.backgroundImage =
+        "url('./assets/icons/sunbackground.png')";
+      imageOfKey.src = "./assets/icons/sunkey2.png";
+      titleText.style.boxShadow = "5px 5px 5px grey";
+      titleText.style.backgroundColor = "antiquewhite";
+      inputField.style.backgroundColor = "antiquewhite";
+      quoteButton.style.backgroundColor = "black";
+      submitButton.style.backgroundColor = "black";
+      clearButton.style.backgroundColor = "black";
+      quoteButton.style.color = "white";
+      submitButton.style.color = "white";
+      clearButton.style.color = "white";
+    }
+
+    themeContainer.style.display = "none";
+  }
+
   quoteButton.addEventListener("click", getPoem);
 
   updatePastSearches();
@@ -462,9 +585,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   languageIcon.addEventListener("click", showLanguages);
+  themeIcon.addEventListener("click", showThemes);
 
   languageToggles.forEach((languageToggle) => {
     languageToggle.addEventListener("change", changeLanguage);
+  });
+
+  themeToggles.forEach((themeToggle) => {
+    themeToggle.addEventListener("change", changeTheme);
   });
 
   clearButton.addEventListener("click", removeSearches);
