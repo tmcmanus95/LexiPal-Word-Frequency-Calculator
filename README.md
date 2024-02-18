@@ -4,9 +4,9 @@ A JavaScript application that allows users to easily visualize the frequency of 
 
 # Deployed Links :
 
-Github Repository: https://github.com/chicago-august-20231/word-checker
+[Github Repository](https://github.com/chicago-august-20231/word-checker)
 
-Live Application Link: https://chicago-august-20231.github.io/Word-Frequency-Calculator/
+[Live Application Link](https://chicago-august-20231.github.io/Word-Frequency-Calculator/)
 
 # User Story :
 
@@ -19,6 +19,8 @@ SO THAT I can see which words are used more often than others and optimize my la
 # Description :
 
 As a team, we wanted to come up with an application that makes learning the English language easier by allowing ESL learners, or any other language aficionados, to input custom text and have the frequency of each word be displayed via a simple color scheme. This allows the users to easily gauge the prevalence of each word they have inputted en masse, and allows them to optimize their language learning by prioritizing the more common words. It can also act as reassurance by informing the learner of the infrequency of words that may be more difficult to recognize or remember.
+
+# Instructions
 
 To use this application, generate random text in the form of a famous poem from the English cannon by clicking the "Get Poem" button, or input your own custom text. To see the frequency of the inputted words, click "Get Frequency". Each inputted word will then be displayed with a background color that corresponds to the frequency of its usage (green - common, red - uncommon). The user can then click a word to get more specific information about the exact frequency of use.
 
