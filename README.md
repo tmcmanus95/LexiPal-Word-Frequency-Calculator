@@ -37,19 +37,19 @@ LexiPal is a JavaScript application that uses the Datamuse word-finding query en
 
 # Sources :
 
-Favicon tab: https://www.flaticon.com/free-icon/data_2326855?term=dictionary&related_id=2326855
+[Favicon tab](https://www.flaticon.com/free-icon/data_2326855?term=dictionary&related_id=2326855)
 
-FavIcon: https://www.flaticon.com/free-icon/language_484633
+[FavIcon](https://www.flaticon.com/free-icon/language_484633)
 
-Pastel rainbow picture taken from: https://www.deviantart.com/queenazraelabaddon/art/Pastel-Rainbow-Ombre-783494420
+[Pastel Rainbow Background](https://www.deviantart.com/queenazraelabaddon/art/Pastel-Rainbow-Ombre-783494420)
 
-Word Frequency API: https://www.datamuse.com/api/
+[Datamuse Word Frequency API](https://www.datamuse.com/api/)
 
-Poetry Quote API: https://poetrydb.org/index.html
+[PoetryDB Poem API](https://poetrydb.org/index.html)
 
-FadeIn CSS animation (styles.css line 144) taken from: https://blog.hubspot.com/website/css-fade-in
+[FadeIn CSS animation](https://blog.hubspot.com/website/css-fade-in) (styles.css line 144)
 
-Functions that used regex were created via the aid of this website: https://regexr.com
+Functions that used regex were created via the aid of [Regexr](https://regexr.com)
 
 Thank you to the following individuals for their translation expertise:
 French - Tom Maude-Griffin
