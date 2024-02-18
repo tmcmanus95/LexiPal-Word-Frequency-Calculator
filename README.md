@@ -52,9 +52,10 @@ LexiPal is a JavaScript application that uses the Datamuse word-finding query en
 Functions that used regex were created via the aid of [Regexr](https://regexr.com)
 
 Thank you to the following individuals for their translation expertise:
-French - Tom Maude-Griffin
-Korean - 송유경
-Polish - Paulina Motoszko
+
+- French - Tom Maude-Griffin
+- Korean - 송유경
+- Polish - Paulina Motoszko
 
 # License
 
